@@ -12,6 +12,16 @@ describe("Post model", () => {
     expect(post.message).toEqual("some message");
   });
 
+  it("has a date created", () => {
+    const post = new Post({ dateCreated: new Date("2024-10-02") });
+    expect(post.dateCreated).toEqual(new Date("2024-10-02"));
+  })
+
+  it("has a date edited", () => {
+    const post = new Post({ dateEdited: new Date("2024-10-02") });
+    expect(post.dateEdited).toEqual(new Date("2024-10-02"));
+  })
+
   it("can list all posts", async () => {
     const posts = await Post.find();
     expect(posts).toEqual([]);

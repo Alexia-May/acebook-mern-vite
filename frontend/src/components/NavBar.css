@@ -1,0 +1,21 @@
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    position: relative;
+}
+
+.menu {
+    display: flex;
+    
+}
+
+a {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.logoContainer{
+    font-size: 2rem;
+}

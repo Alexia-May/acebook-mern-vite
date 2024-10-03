@@ -134,6 +134,36 @@ describe("/posts", () => {
       expect(secondPost.message).toEqual("hola!");
     });
 
+    test("returns post with user information", async () => {
+      const user1 = new User({
+        email: "chris@email.com",
+        password: "password",
+        username: "marion",
+        firstName: "Alexia",
+        lastName: "Chris",
+        gender: "both",
+        birthday: new Date("0000-12-25"),
+      })
+      user1.save()
+
+      const post1 = new Post({
+        message: "hello",
+        dateCreated: new Date("2024-10-02"),
+        user: user1._id
+      })
+      post1.save()
+
+      const response = await request(app)
+      .get("/posts")
+      .set("Authorization", `Bearer ${token}`);
+
+      const post = response.body.posts[0]
+      expect(post.message).toEqual("hello")
+      expect(new Date(post.dateCreated)).toEqual(new Date("2024-10-02"))
+      expect(post.user.username).toEqual("marion")
+      expect(post.user.password).toEqual(undefined)
+    })
+
     test("returns a new token", async () => {
       const post1 = new Post({ message: "First Post!" });
       const post2 = new Post({ message: "Second Post!" });

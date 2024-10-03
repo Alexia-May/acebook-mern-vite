@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 import { signup } from "../../services/authentication";
 
+import NavBar from "../../components/NavBar";
+
 export function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

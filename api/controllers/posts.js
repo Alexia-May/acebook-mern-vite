@@ -2,7 +2,7 @@ const Post = require("../models/post");
 const { generateToken } = require("../lib/token");
 
 async function getAllPosts(req, res) {
-  const posts = await Post.find();
+  const posts = await Post.find().populate('user', 'username');
   const token = generateToken(req.user_id);
   res.status(200).json({ posts: posts, token: token });
 }
