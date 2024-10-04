@@ -3,6 +3,7 @@
 //import { getFriends } from "../../services/friends";
 //import Friend from "../../components/Friend";
 import NavBar from "../../components/NavBar";
+import User from "../../components/User";
 
 export function FriendsPage() {
 /*  const [friends, setFriends] = useState([]);
@@ -29,11 +30,30 @@ export function FriendsPage() {
         navigate("/login");
         
     } */
+
+        //const created just for testing
+    const friends = [
+      {
+        _id: "1234",
+        username: "testuser1"
+      },
+      {
+        _id: "1235",
+        username: "testuser2"
+      },
+      {
+        _id: "1236",
+        username: "testuser3"
+      },
+    ]
     
     return (
         <div className="home">
-        <NavBar></NavBar>
-        <h1>Check out your Friends!</h1>
+            <NavBar></NavBar>
+            
+            <h1>Check out your Friends!</h1>
+            <p>Temporary listing all users</p>
+            <User user={friends[0]}></User>
         </div>
     );
 }

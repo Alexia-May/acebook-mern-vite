@@ -1,13 +1,13 @@
 import { render, screen } from "@testing-library/react";
 import { createMemoryRouter, MemoryRouter, RouterProvider} from "react-router-dom"; // Setup automatic routing to it without needing to login
 import NavBar from "../../src/components/NavBar";
-import userEvent from '@testing-library/user-event';
+ // import userEvent from '@testing-library/user-event';
 
-import { ProfilePage } from "../../src/pages/Profile/ProfilePage";
-import { MessagesPage } from "../../src/pages/Messages/MessagesPage";
-import { FeedPage } from "../../src/pages/Feed/FeedPage";
-import { SettingsPage } from "../../src/pages/Settings/SettingsPage";
-import { FriendsPage } from "../../src/pages/Friends/FriendsPage";
+// import { ProfilePage } from "../../src/pages/Profile/ProfilePage";
+// import { MessagesPage } from "../../src/pages/Messages/MessagesPage";
+// import { FeedPage } from "../../src/pages/Feed/FeedPage";
+// import { SettingsPage } from "../../src/pages/Settings/SettingsPage";
+// import { FriendsPage } from "../../src/pages/Friends/FriendsPage";
 
 // Navigation
 
@@ -69,7 +69,7 @@ test("has correct href for each navigation link", () => {
     </MemoryRouter>
     );
 
-    expect(screen.getByText("Home").closest("a").getAttribute("href")).to.equal("/posts");
+    expect(screen.getByText("Home").closest("a").getAttribute("href")).to.equal("/feed");
     expect(screen.getByText("Profile").closest("a").getAttribute("href")).to.equal("/profile");
     expect(screen.getByText("Friends").closest("a").getAttribute("href")).to.equal("/friends");
     expect(screen.getByText("Messages").closest("a").getAttribute("href")).to.equal("/messages");

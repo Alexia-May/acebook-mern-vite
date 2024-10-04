@@ -8,14 +8,15 @@ describe("Profile Page", () => {
   });
 
   test("It displays a page heading", async () => {
-
-    render(
+    window.localStorage.setItem("token", "testToken");
+    render( // what is it??
       <MemoryRouter>
         <ProfilePage />
       </MemoryRouter>
     );
 
-    const heading = await screen.findByRole("heading", {level: 1});
+    const heading = await screen.findByTestId("profilePage-h1");
+    console.log(heading)
     expect(heading.textContent).toEqual("Welcome to your profile!");
   });
 

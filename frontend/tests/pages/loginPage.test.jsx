@@ -54,7 +54,7 @@ describe("Login Page", () => {
 
     await completeLoginForm();
 
-    expect(navigateMock).toHaveBeenCalledWith("/posts");
+    expect(navigateMock).toHaveBeenCalledWith("/feed");
   });
 
   test("navigates to /login on unsuccessful login", async () => {

@@ -9,7 +9,7 @@ describe("Post model", () => {
     await User.deleteMany({});
   });
   it("given a list of one like, the user document is returned", async () => {
-    const user = new User({
+    const user = new User({ 
       email: "someone@example.com",
       password: "password",
     });

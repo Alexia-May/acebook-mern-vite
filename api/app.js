@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 
 // API Routes
 app.use("/users", usersRouter);
-app.use("/posts", tokenChecker, postsRouter);
+app.use("/posts", tokenChecker, postsRouter); // calls the route in api/routes/post.js
 app.use("/friends", tokenChecker, usersRouter);
 app.use("/tokens", authenticationRouter);
 

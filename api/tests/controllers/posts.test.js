@@ -4,6 +4,8 @@ const JWT = require("jsonwebtoken");
 const app = require("../../app");
 const Post = require("../../models/post");
 const User = require("../../models/user");
+const mongoose = require("mongoose");
+
 
 require("../mongodb_helper");
 
@@ -48,15 +50,39 @@ describe("/posts", () => {
       expect(response.status).toEqual(201);
     });
 
+
+    // post fields
+    // 
+    // message: String,
+    // dateCreated: Date,
+    // dateEdited: Date, (ignoring for now)
+    // likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+    // user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+
     test("creates a new post", async () => {
+
+      const user = new User({
+        email: "post-test@test.com",
+        password: "12345678",
+        username: "alexia"
+      });
+      await user.save();
+
+      const token = createToken(user._id)
+
       await request(app)
         .post("/posts")
         .set("Authorization", `Bearer ${token}`)
-        .send({ message: "Hello World!!" });
+        .send({ 
+          message: "Hello World!!",
+          dateCreated: new Date('2024-10-03'),
+        });
 
-      const posts = await Post.find();
+      const posts = await Post.find().populate("user");
       expect(posts.length).toEqual(1);
       expect(posts[0].message).toEqual("Hello World!!");
+      expect(posts[0].dateCreated).toEqual(new Date('2024-10-03'));
+      expect(posts[0].user.username).toEqual("alexia");
     });
 
     test("returns a new token", async () => {
@@ -116,11 +142,64 @@ describe("/posts", () => {
       expect(response.status).toEqual(200);
     });
 
+    test("returns multiple posts for a given specific user", async () => {
+      const user1 = new User({
+        email: "chris@email.com",
+        password: "password",
+        username: "marion",
+        firstName: "Alexia",
+        lastName: "Chris",
+        gender: "both",
+        birthday: new Date("0000-12-25"),
+      })
+      user1.save()
+      
+      const user2 = new User({
+        email: "user2@email.com",
+        password: "password",
+        username: "user2",
+        firstName: "user",
+        lastName: "two",
+        gender: "two",
+        birthday: new Date("2002-10-01"),
+      })
+      user2.save()
+
+      const post1 = new Post({ message: "howdy!", dateCreated: new Date("2024-10-02"), user: user1._id });
+      const post2 = new Post({ message: "bonjour!", dateCreated: new Date("2020-11-22"), user: user1._id  });
+      const post3 = new Post({ message: "hola!", dateCreated: new Date("2020-12-22"), user: user2._id });
+      await post1.save();
+      await post2.save();
+      await post3.save();
+
+      const response = await request(app)
+      .get(`/posts?user=${user1._id}`)
+      .set("Authorization", `Bearer ${token}`);
+      
+      const post = response.body.posts;
+      const firstPost = post[0];
+      const secondPost = post[1];
+      // const thirdPost = post[2];
+
+      expect(firstPost.message).toEqual("howdy!");
+      expect(secondPost.message).toEqual("bonjour!");
+      expect(firstPost.user._id).toEqual(user1._id.toString());
+      expect(secondPost.user._id).toEqual(user1._id.toString());
+      // expect(thirdPost.user._id).toEqual(user2._id.toString());
+
+      expect(post.length).toEqual(2)
+
+      expect(new Date(firstPost.dateCreated)).toEqual(new Date("2024-10-02"));
+      expect(new Date(secondPost.dateCreated)).toEqual(new Date("2020-11-22"));
+      
+    });
+
     test("returns every post in the collection", async () => {
       const post1 = new Post({ message: "howdy!" });
       const post2 = new Post({ message: "hola!" });
       await post1.save();
       await post2.save();
+      
 
       const response = await request(app)
         .get("/posts")
@@ -132,6 +211,8 @@ describe("/posts", () => {
 
       expect(firstPost.message).toEqual("howdy!");
       expect(secondPost.message).toEqual("hola!");
+
+    
     });
 
     test("returns post with user information", async () => {
@@ -218,3 +299,84 @@ describe("/posts", () => {
     });
   });
 });
+
+describe("DELETE /posts/:id", () => {
+  let token;
+  let user1;
+  let post1;
+
+  beforeEach(async () => {
+    user1 = new User({
+      email: "chris@email.com",
+      password: "password",
+      username: "marion",
+      firstName: "Alexia",
+      lastName: "Chris",
+      gender: "both",
+      birthday: new Date("0000-12-25"),
+    });
+    await user1.save();
+
+    token = createToken(user1.id);
+
+    const user2 = new User({
+      email: "user2@email.com",
+      password: "password",
+      username: "user2",
+      firstName: "user",
+      lastName: "two",
+      gender: "two",
+      birthday: new Date("2002-10-01"),
+    })
+    user2.save()
+
+    post1 = new Post({
+      message: "hello",
+      dateCreated: new Date("2024-10-02"),
+      user: user1._id,
+    });
+    await post1.save();
+
+    post2 = new Post({
+      message: "hello",
+      dateCreated: new Date("2024-10-02"),
+      user: user2._id,
+    });
+    await post2.save();
+  });
+
+  afterEach(async () => {
+    await User.deleteMany({});
+    await Post.deleteMany({});
+  });
+
+  test("responds with 200 when post is successfully deleted", async () => {
+    const response = await request(app)
+      .delete(`/posts/${post1.id}`)
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(response.status).toEqual(200);
+    expect(response.body.message).toEqual("Post deleted");
+  });
+
+  test("responds with 404 if post does not exist", async () => {
+    const invalidPostId = new mongoose.Types.ObjectId(); // Creating a random valid ObjectId
+    const response = await request(app)
+      .delete(`/posts/${invalidPostId}`)
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(response.status).toEqual(404);
+    expect(response.body.message).toEqual("Post not found");
+  });
+
+  test("responds with 403 if user is not authorized", async () => {
+
+    const response = await request(app)
+      .delete(`/posts/${post2._id}`)
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(response.status).toEqual(403);
+    expect(response.body.message).toEqual("Unauthorized to delete this post");
+  });
+});
+

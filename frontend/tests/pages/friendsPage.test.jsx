@@ -19,4 +19,6 @@ describe("Testing Friends Page", () => {
         expect(text.textContent).toEqual("Check out your Friends!");
     });
 
+
+
 });

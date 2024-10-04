@@ -1,0 +1,91 @@
+.CreateContainer {
+    width: 60vw;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 1.5rem;
+    margin: auto;
+    box-shadow: 0.5rem 0.5rem 1rem 2px rgba(0, 0, 0, 0.2);
+    border-radius: 1.5rem;
+    background-color: #f9f9f9;
+}
+
+h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.FieldContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.FieldContainer form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.FieldContainer form textarea {
+    width: 95%;
+    height: 12rem;
+    box-sizing: border-box;
+    resize: vertical;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    font-size: 1.1rem;
+    font-family: inherit;
+    box-shadow: inset 0 0 0.5rem rgba(0, 0, 0, 0.1);
+    outline: none;
+    resize: none;
+}
+
+.FieldContainer form textarea:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 0.5rem rgba(74, 144, 226, 0.5);
+}
+
+.SubmitButton {
+    width: 10rem;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: #4a90e2;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.SubmitButton:hover {
+    background-color: #357abd;
+}
+
+.SubmitButton:active {
+    transform: translateY(2px);
+}
+
+.WordCounter {
+    display:flex;
+    margin-left: auto;
+    margin-right: 10%;
+}
+
+@media (max-width: 768px) {
+    .CreateContainer {
+        width: 90vw;
+    }
+
+    .FieldContainer form textarea {
+        width: 90%;
+    }
+}
+

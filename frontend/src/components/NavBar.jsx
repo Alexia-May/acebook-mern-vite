@@ -1,4 +1,5 @@
 // importing the logout componant
+import { Component } from "react";
 import LogoutButton from "./LogoutButton";
 
 // importing the nav bar css
@@ -9,7 +10,7 @@ function NavBar() {
     return (
         <nav>
             <div className="homeLogo">
-                <a href="/posts">
+                <a href="/feed">
                     <div className="logoContainer">
                         🍉
                     </div>
@@ -30,3 +31,5 @@ function NavBar() {
 }
 
 export default NavBar;
+
+
