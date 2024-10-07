@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const usersRouter = require("./routes/users");
+const userRouter = require("./routes/user");
 const postsRouter = require("./routes/posts");
 const authenticationRouter = require("./routes/authentication");
 const tokenChecker = require("./middleware/tokenChecker");
@@ -22,6 +23,8 @@ app.use("/users", usersRouter);
 app.use("/posts", tokenChecker, postsRouter); // calls the route in api/routes/post.js
 app.use("/friends", tokenChecker, usersRouter);
 app.use("/tokens", authenticationRouter);
+app.use("/user",userRouter);
+
 
 // 404 Handler
 app.use((_req, res) => {

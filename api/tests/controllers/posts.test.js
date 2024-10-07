@@ -41,6 +41,8 @@ describe("/posts", () => {
     await Post.deleteMany({});
   });
 
+
+
   describe("POST, when a valid token is present", () => {
     test("responds with a 201", async () => {
       const response = await request(app)
@@ -51,13 +53,6 @@ describe("/posts", () => {
     });
 
 
-    // post fields
-    // 
-    // message: String,
-    // dateCreated: Date,
-    // dateEdited: Date, (ignoring for now)
-    // likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
-    // user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 
     test("creates a new post", async () => {
 

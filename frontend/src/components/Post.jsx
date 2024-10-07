@@ -1,4 +1,21 @@
+import { useState, useEffect } from 'react';
+import User from './User.jsx'
+
+import {
+  Container,
+  Button,
+  PostContainer,
+  PostHeader,
+  UserContainer,
+  UserDetails,
+  TimeStamp,
+  TextContent,
+  Footer,
+  Image
+} from './Post.styled.js'; 
+
 function Post(props) {
+  const [avatar, setAvatar] = useState('');
 
   const getDateString = (dateString) => {
     const date = new Date(dateString);
@@ -14,19 +31,45 @@ function Post(props) {
     const minutes = date.getMinutes().toString().padStart(2, "0");
     const day = date.getDate().toString().padStart(2, "0");
     const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const year = date.getFullYear().toString().slice(2)
+    const year = date.getFullYear().toString().slice(2);
     return `${hour}:${minutes}${meridium} - ${day}.${month}.${year}`;
   };
 
+
+  useEffect(() => {
+    const getRandomAvatar = () => {
+      const avatarCount = 6; 
+      const randomIndex = Math.floor(Math.random() * avatarCount) + 1;
+      return `src/assets/userAvatars/${randomIndex}.svg`;
+    };
+    setAvatar(getRandomAvatar());
+  }, []);
+
   return (
-    <article key={props.id}>
-      <div>
-      <h2 data-testid="username">{props.username}</h2>
-      <h2 data-testid="dateCreated">{getDateString(props.dateCreated)}</h2>
-      </div>
-      <p data-testid="message">{props.message}</p>
-      <div data-testid="numberOfLikes">{props.noOfLikes}</div>
-    </article>
+    <Container>
+    <PostContainer key={props.id}>
+      <PostHeader>
+        <UserContainer>
+          <Image src={avatar} alt="User Avatar" />
+          <UserDetails>
+            <User 
+              user={{ 
+                _id: props.user?._id, 
+                username: props.username
+              }} 
+            />
+            <TimeStamp data-testid="dateCreated">
+              {getDateString(props.dateCreated)}
+            </TimeStamp>
+          </UserDetails>
+        </UserContainer>
+      </PostHeader>
+      <TextContent data-testid="message">{props.message}</TextContent>
+      <Footer>
+        <Button data-testid="numberOfLikes">{props.noOfLikes} Likes</Button>
+      </Footer>
+    </PostContainer>
+    </Container>
   );
 }
 
