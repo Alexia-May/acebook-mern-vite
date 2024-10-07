@@ -13,7 +13,6 @@ export async function getPosts(token, userId="") {
   if (userId) {
     newUrl.searchParams.append("userId",`${userId}`)
   }
-  console.log("url", newUrl)
   const response = await fetch(newUrl.toString(), requestOptions);
   
   if (response.status !== 200) {
@@ -21,7 +20,6 @@ export async function getPosts(token, userId="") {
   }
 
   const data = await response.json();
-  console.log("data", data)
   return data;
 }
 
