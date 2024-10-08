@@ -168,7 +168,7 @@ describe("/posts", () => {
       await post3.save();
 
       const response = await request(app)
-      .get(`/posts?user=${user1._id}`)
+      .get(`/posts?userId=${user1._id}`)
       .set("Authorization", `Bearer ${token}`);
       
       const post = response.body.posts;

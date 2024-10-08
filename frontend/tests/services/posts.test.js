@@ -4,6 +4,7 @@ import { describe, expect, vi } from "vitest";
 // importing the functions we want to test
 import { getPosts } from "../../src/services/posts";
 import { createPost } from "../../src/services/posts";
+import { deletePost } from "../../src/services/posts";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -57,7 +58,7 @@ describe("posts service", () => {
       const url = fetchArguments[0];
       const options = fetchArguments[1];
 
-      expect(url).toEqual(`${BACKEND_URL}/posts?userID=123`);
+      expect(url).toEqual(`${BACKEND_URL}/posts?userId=123`);
       expect(options.method).toEqual("GET");
       expect(options.headers["Authorization"]).toEqual("Bearer testToken");
     });
@@ -130,4 +131,41 @@ describe("posts service", () => {
       }
     });
   })
+
+  // Testing delete post service
+  describe("deletePost", () => {
+    test("includes a token and post id in the request", async () => {
+      fetch.mockResponseOnce(JSON.stringify({ message: "Post deleted", token: "newToken" }), {
+        status: 200,
+      });
+  
+      const postId = "66ffee1c0e13ab89752dd1a7";
+  
+      await deletePost("testToken", postId);
+  
+      const fetchArguments = fetch.mock.lastCall;
+      const url = fetchArguments[0];
+      const options = fetchArguments[1];
+  
+      expect(url).toEqual(`${BACKEND_URL}/posts/${postId}`);
+      expect(options.method).toEqual("DELETE");
+      expect(options.headers["Authorization"]).toEqual("Bearer testToken");
+    });
+  
+    test("rejects with an error if the status is not 200", async () => {
+      fetch.mockResponseOnce(
+        JSON.stringify({ message: "Unable to delete post" }),
+        { status: 400 }
+      );
+  
+      const postId = "66ffee1c0e13ab89752dd1a7";
+  
+      try {
+        await deletePost("testToken", postId);
+      } catch (err) {
+        expect(err.message).toEqual("Unable to delete post");
+      }
+    });
+  });
+  
 });

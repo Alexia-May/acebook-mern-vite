@@ -29,7 +29,7 @@ describe("Post", () => {
 
     render(<Post id={id} username={username} />);
 
-    const usernameEl = screen.getByTestId("username");
+    const usernameEl = screen.getByTestId("user-link");
     expect(usernameEl.textContent).toBe("testuser");
   });
 
@@ -69,6 +69,6 @@ describe("Post", () => {
     render(<Post id={id} noOfLikes={likes} />);
 
     const likesEl = screen.getByTestId("numberOfLikes");
-    expect(likesEl.textContent).toBe("10"); 
+    expect(likesEl.textContent).toBe("10 Likes"); 
   })
 });

@@ -23,7 +23,7 @@ app.use("/users", usersRouter);
 app.use("/posts", tokenChecker, postsRouter); // calls the route in api/routes/post.js
 app.use("/friends", tokenChecker, usersRouter);
 app.use("/tokens", authenticationRouter);
-app.use("/user",userRouter);
+app.use("/user", tokenChecker, userRouter);
 
 
 // 404 Handler

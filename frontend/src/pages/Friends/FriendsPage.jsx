@@ -1,60 +1,45 @@
-//import { useState, useEffect } from "react";
-//import { useNavigate } from "react-router-dom";
-//import { getFriends } from "../../services/friends";
-//import Friend from "../../components/Friend";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/NavBar";
 import User from "../../components/User";
+import { getAllUsers } from "../../services/users";
 
 export function FriendsPage() {
-/*  const [friends, setFriends] = useState([]);
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [users, setUsers] = useState([]);
 
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        const loggedIn = token !== null;
-        if (loggedIn) {
-        getFriends(token)
-            .then((data) => {
-            setFriends(data.friends);
-            localStorage.setItem("token", data.token);
-            })
-            .catch((err) => {
-            console.error(err);
-            navigate("/login");
-            });
-        }
-    }, [navigate]);
-
+  useEffect(() => {
     const token = localStorage.getItem("token");
-    if (!token) {
-        navigate("/login");
-        
-    } */
+    const loggedIn = token !== null;
+    if (loggedIn) {
+      getAllUsers(token)
+        .then((data) => {
+          setUsers(data.users);
+          localStorage.setItem("token", data.token);
+        })
+        .catch((err) => {
+          console.error(err);
+          navigate("/login");
+        });
+    }
+  }, [navigate]);
 
-        //const created just for testing
-    const friends = [
-      {
-        _id: "1234",
-        username: "testuser1"
-      },
-      {
-        _id: "1235",
-        username: "testuser2"
-      },
-      {
-        _id: "1236",
-        username: "testuser3"
-      },
-    ]
-    
-    return (
-        <div className="home">
-            <NavBar></NavBar>
-            
-            <h1>Check out your Friends!</h1>
-            <p>Temporary listing all users</p>
-            <User user={friends[0]}></User>
-        </div>
-    );
+  const token = localStorage.getItem("token");
+  if (!token) {
+    navigate("/login");
+    return;
+  }
+  
+
+  return (
+    <div className="home">
+      <NavBar></NavBar>
+
+      <h1>Check out your Friends!</h1>
+      <p>Temporary listing all users</p>
+      {users.map((user) => (
+        <User key={user._id} user={user} />
+      ))}
+    </div>
+  );
 }
-

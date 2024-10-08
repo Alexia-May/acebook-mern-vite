@@ -9,6 +9,7 @@ import { ProfilePage } from "./pages/Profile/ProfilePage";
 import { FriendsPage } from "./pages/Friends/FriendsPage.jsx";
 import { MessagesPage } from "./pages/Messages/MessagesPage.jsx";
 import { SettingsPage } from "./pages/Settings/SettingsPage.jsx";
+import { UserPage } from "./pages/User/UserPage.jsx";
 
 // docs: https://reactrouter.com/en/main/start/overview
 const router = createBrowserRouter([
@@ -44,10 +45,10 @@ const router = createBrowserRouter([
     path: "/settings",
     element: <SettingsPage/>
   },
-  // {
-  //   path: "/user/:user-id",
-  //   element: <UserPage />
-  // },
+  {
+  path: "/user/:userId",
+  element: <UserPage />
+  }
 ]);
 
 function App() {
