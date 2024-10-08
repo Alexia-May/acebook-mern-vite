@@ -50,7 +50,7 @@ export function ProfilePage() {
         createPostState={createPostState}
       ></CreatePost>
       <h2>Posts</h2>
-        <ListOfPosts posts={posts}/>         
+        <ListOfPosts posts={posts} setPosts={setPosts}/>         
 
     </>
   );

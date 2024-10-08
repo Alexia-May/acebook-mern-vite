@@ -34,7 +34,7 @@ export function FeedPage() {
     <>
     <NavBar></NavBar>
       <h2>Posts</h2>
-      <ListOfPosts posts={posts}/>         
+      <ListOfPosts posts={posts} setPosts={setPosts}/>         
     </>
   );
 }

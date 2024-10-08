@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import User from './User.jsx'
+import DeletePostButton from './DeletePostButton.jsx';
 
 import {
   Container,
@@ -14,7 +15,7 @@ import {
   Image
 } from './Post.styled.js'; 
 
-function Post(props) {
+function Post(props, setPosts) {
   const [avatar, setAvatar] = useState('');
 
   const getDateString = (dateString) => {
@@ -67,6 +68,12 @@ function Post(props) {
       <TextContent data-testid="message">{props.message}</TextContent>
       <Footer>
         <Button data-testid="numberOfLikes">{props.noOfLikes} Likes</Button>
+        <DeletePostButton
+          postId={props.postId}
+          userId={props.userId}
+          postCreatorId={props.userId}
+          setPosts={setPosts} // Function to update the posts after deletion
+        />
       </Footer>
     </PostContainer>
     </Container>
