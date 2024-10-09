@@ -6,7 +6,7 @@ const Container = styled.div`
   flex-direction: column;
   gap: 1.25rem;
   padding: 1.25rem;
-  background-color: white;
+  background-color: #f1f5f9;
   border-radius: 0.375rem;
   margin-bottom: 1.25rem;
 `;
@@ -40,7 +40,7 @@ const PostContainer = styled.div`
   height: 100%;
   margin-bottom: 1.25rem;
   border-radius: 0.375rem;
-  border: 2px solid #333333;
+  
 `;
 
 const PostHeader = styled.div`
@@ -64,6 +64,7 @@ const TimeStamp = styled.span`
 `;
 
 const Button = styled.button`
+  font-family: 'DM Sans', sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
