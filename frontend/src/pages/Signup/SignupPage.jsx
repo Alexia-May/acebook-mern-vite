@@ -11,6 +11,7 @@ export function SignupPage() {
   const [gender, setGender] = useState("");
   const [birthday, setBirthday] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   const navigate = useNavigate();
 
@@ -29,8 +30,7 @@ export function SignupPage() {
 
   function handleEmailChange(event) {
     setEmail(event.target.value);
-
-    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
     if (!emailRegex.test(event.target.value)) {
       setEmailError('Please enter a valid email address');
     } else {
@@ -40,7 +40,15 @@ export function SignupPage() {
 
   function handlePasswordChange(event) {
     setPassword(event.target.value);
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+    
+    if (!passwordRegex.test(event.target.value)) {
+      setPasswordError('Please insert at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character');
+    } else {
+      setPasswordError('');
+    }
   }
+  
 
   function handleUsernameChange(event) {
     setUsername(event.target.value);
@@ -86,6 +94,7 @@ export function SignupPage() {
           value={password}
           onChange={handlePasswordChange}
         />
+        {passwordError && <p style={{ color: 'red' }}>{passwordError}</p>}
 
         {/* username */}
         <label htmlFor="username">Username:</label>
@@ -130,7 +139,7 @@ export function SignupPage() {
          {/* birthday */}
         <label htmlFor="birthday">Birthday:</label>
         <input
-          placeholder="28-08-1918"
+          placeholder="2002-08-28"
           id="birthday"
           type="text"
           value={birthday}
