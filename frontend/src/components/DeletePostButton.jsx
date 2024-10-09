@@ -1,5 +1,5 @@
 import { deletePost } from "../services/posts";
-
+import { DeleteButton } from "./Post.styled.js";
 
 function DeletePostButton(props) {
 
@@ -29,9 +29,9 @@ function DeletePostButton(props) {
     return (
         <div className="DeleteContainer">
         <form onSubmit={handleDelete}>
-            <button className="DeleteButton">
+            <DeleteButton className="DeleteButton">
                 Delete
-            </button>
+            </DeleteButton>
         </form>
         </div>
     );
