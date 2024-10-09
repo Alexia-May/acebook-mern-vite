@@ -139,7 +139,7 @@ export function SignupPage() {
          {/* birthday */}
         <label htmlFor="birthday">Birthday:</label>
         <input
-          placeholder="28-08-1918"
+          placeholder="2002-08-28"
           id="birthday"
           type="text"
           value={birthday}
