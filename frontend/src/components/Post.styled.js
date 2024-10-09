@@ -70,14 +70,18 @@ const Button = styled.button`
   gap: 0.75rem;
   padding: 0.25rem 1rem;
   border: 1px solid #d1d5db;
-  border-radius: 0.5rem;
+  border-radius: 0.3rem;
+
+  &:hover {
+    background-color: #FFFAC5;
+  }
 `;
 
 const DeleteButton = styled(Button)`
-  background-color: red;
+  background-color: #FF6A6A;
 
   &:hover {
-    background-color: darkred;
+    background-color: #D9153B;
   }
 `;
 
