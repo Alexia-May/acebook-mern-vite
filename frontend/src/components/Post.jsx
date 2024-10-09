@@ -13,7 +13,7 @@ import {
   TextContent,
   Footer,
   Image
-} from './Post.styled.js'; 
+} from './styles/Post.styled.js'; 
 
 function Post(props) {
   const [avatar, setAvatar] = useState('');

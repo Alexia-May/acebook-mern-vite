@@ -1,5 +1,5 @@
 import { deletePost } from "../services/posts";
-import { DeleteButton } from "./Post.styled.js";
+import { DeleteButton } from "./styles/Post.styled.js";
 
 function DeletePostButton(props) {
 
