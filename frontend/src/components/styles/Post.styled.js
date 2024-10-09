@@ -6,7 +6,7 @@ const Container = styled.div`
   flex-direction: column;
   gap: 1.25rem;
   padding: 1.25rem;
-  background-color: white;
+  background-color: #f1f5f9;
   border-radius: 0.375rem;
   margin-bottom: 1.25rem;
 `;
@@ -40,7 +40,7 @@ const PostContainer = styled.div`
   height: 100%;
   margin-bottom: 1.25rem;
   border-radius: 0.375rem;
-  border: 2px solid #333333;
+  
 `;
 
 const PostHeader = styled.div`
@@ -63,14 +63,27 @@ const TimeStamp = styled.span`
   font-size: 0.875rem;
 `;
 
-const Button = styled.a`
+const Button = styled.button`
+  font-family: 'DM Sans', sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
   padding: 0.25rem 1rem;
   border: 1px solid #d1d5db;
-  border-radius: 0.5rem;
+  border-radius: 0.3rem;
+
+  &:hover {
+    background-color: #FFFAC5;
+  }
+`;
+
+const DeleteButton = styled(Button)`
+  background-color: #FF6A6A;
+
+  &:hover {
+    background-color: #D9153B;
+  }
 `;
 
 const TextContent = styled.div`
@@ -87,6 +100,6 @@ const Footer = styled.div`
 
 export {
   Container, Image, InputContainer, Input, ImageIcon, PostContainer, 
-  PostHeader, UserContainer, UserDetails, TimeStamp, Button, 
+  PostHeader, UserContainer, UserDetails, TimeStamp, Button, DeleteButton,
   TextContent, Footer
 };

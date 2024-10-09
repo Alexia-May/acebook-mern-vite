@@ -50,7 +50,7 @@ export function FeedPage() {
   return (
     <>
     <NavBar></NavBar>
-      <h2>Posts</h2>
+      <h2>Feed</h2>
       <ListOfPosts posts={posts} userId={user._id} setDelete={setDelete}/>         
     </>
   );

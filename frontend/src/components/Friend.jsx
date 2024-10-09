@@ -1,4 +1,4 @@
-import { UserName } from "./User.styled";
+import { UserName } from "./styles/User.styled";
 
 function Friend(props) {
   return(

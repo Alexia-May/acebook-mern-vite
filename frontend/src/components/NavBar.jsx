@@ -2,31 +2,32 @@
 import LogoutButton from "./LogoutButton";
 
 // importing the nav bar css
-import "./NavBar.css"
+//import "./NavBar.css"
 
+import { 
+    Nav, 
+    HomeLogo, 
+    LogoContainer, 
+    Menu 
+} from './styles/NavBar.styled.js';
 
 function NavBar() {
     return (
-        <nav>
-            <div className="homeLogo">
+        <Nav>
+            <HomeLogo>
                 <a href="/feed">
-                    <div className="logoContainer">
-                        🍉
-                    </div>
-                    <div>
-                        Home
-                    </div>
+                    <LogoContainer>🍉</LogoContainer>
                 </a>
-            </div>
-            <div className="menu">
+            </HomeLogo>
+            <Menu>
                 <a href="/profile">Profile</a>
                 <a href="/friends">Friends</a>
                 <a href="/messages">Messages</a>
                 <a href="/settings">Settings</a>
-                <LogoutButton></LogoutButton>
-            </div>
-        </nav>
-    )
+                <LogoutButton />
+            </Menu>
+        </Nav>
+    );
 }
 
 export default NavBar;

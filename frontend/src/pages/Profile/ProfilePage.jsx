@@ -12,6 +12,7 @@ export function ProfilePage() {
   const [posts, setPosts] = useState([]);
   const [createPostState, setCreatePostState] = useState(false);
   const [user, setUser] = useState('');
+  const [deleted, setDelete] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,12 +23,10 @@ export function ProfilePage() {
         try {
           const userData = await getUserInfo(token);
           setUser(userData.userInfo[0]);
-          // console.log(userData.userInfo[0])
-          // localStorage.setItem("token", userData.token);
 
           const postData = await getPosts(token, userData.userInfo[0]._id);
           setPosts(postData.posts);
-          // localStorage.setItem("token", postData.token);
+
         } catch (err) {
           console.log(err);
           navigate("/login");
@@ -36,6 +35,20 @@ export function ProfilePage() {
     };
     fetchData();
   }, [navigate, createPostState]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const loggedIn = token !== null;
+    if (loggedIn && user._id) { // Ensure user._id exists
+      getPosts(token, user._id) // Fetch posts for this specific user
+        .then((data) => {
+          setPosts(data.posts); // Update posts for this user's profile
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }, [navigate, deleted, user._id]);
 
   const token = localStorage.getItem("token");
   if (!token) {
@@ -56,9 +69,10 @@ export function ProfilePage() {
         />
       <br/>  
       <h2>Posts</h2>
-        <ListOfPosts 
-        posts={posts}
-        />         
+      <ListOfPosts 
+      posts={posts} 
+      userId={user._id} 
+      setDelete={setDelete}/>         
     </>
   );
 }
