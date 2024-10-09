@@ -1,7 +1,8 @@
 import { acceptFriendRequest } from "../services/friends";
+import { declineFriendRequest } from "../services/friends";
 
-export function AcceptFriendRequest(props) {
-  const handleClick = async (event) => {
+export function FriendRequest(props) {
+  const handleAcceptClick = async (event) => {
     event.preventDefault()
     const token = localStorage.getItem("token"); // getting the token from browser storage
 
@@ -16,9 +17,25 @@ export function AcceptFriendRequest(props) {
       }
     }
   }
+  const handleDeclineClick = async (event) => {
+    event.preventDefault()
+    const token = localStorage.getItem("token"); // getting the token from browser storage
+
+    const loggedIn = token !== null;
+    if (loggedIn) {
+      try {
+        const data = await declineFriendRequest(token, props.userId);
+        localStorage.setItem("token", data.token);
+        props.setRequest("")
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }
   return (
     <>
-    <button onClick={handleClick}>Accept</button>
+    <button onClick={handleAcceptClick}>Accept</button>
+    <button onClick={handleDeclineClick}>Decline</button>
     </>
   )
 }

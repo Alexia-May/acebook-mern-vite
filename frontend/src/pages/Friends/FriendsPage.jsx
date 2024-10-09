@@ -2,9 +2,15 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/NavBar";
 import User from "../../components/User";
-import { getFriends, getNonFriendUsers, getFriendRequests } from "../../services/friends";
+import {
+  getFriends,
+  getNonFriendUsers,
+  getFriendRequests,
+  getPendingFriendRequests,
+} from "../../services/friends";
 import Friend from "../../components/Friend";
-import { AcceptFriendRequest } from "../../components/AcceptFriendRequest";
+import { FriendRequest } from "../../components/AcceptFriendRequest";
+import { CancelFriendRequest } from "../../components/CancelFriendRequest";
 
 export function FriendsPage() {
   const navigate = useNavigate();
@@ -12,7 +18,7 @@ export function FriendsPage() {
   const [friends, setFriends] = useState([]);
   const [request, setRequest] = useState([]);
   const [friendRequests, setFriendRequests] = useState([]);
-
+  const [pendingFriendRequests, setPendingFriendRequests] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,16 +26,19 @@ export function FriendsPage() {
       const loggedIn = token !== null;
       try {
         if (loggedIn) {
-          const friendRequestsData = await getFriendRequests(token)
-          setFriendRequests(friendRequestsData.friendRequests)
-          const usersData = await getNonFriendUsers(token)
-          setUsers(usersData.users)
-          const friendsData = await getFriends(token)
-          setFriends(friendsData.friends)
+          const pendingFriendRequestsData = await getPendingFriendRequests(
+            token
+          );
+          setPendingFriendRequests(pendingFriendRequestsData.pendingRequests);
+          const friendRequestsData = await getFriendRequests(token);
+          setFriendRequests(friendRequestsData.friendRequests);
+          const usersData = await getNonFriendUsers(token);
+          setUsers(usersData.users);
+          const friendsData = await getFriends(token);
+          setFriends(friendsData.friends);
           localStorage.setItem("token", friendsData.token);
         }
       } catch (err) {
-
         console.error(err);
         navigate("/login");
       }
@@ -42,7 +51,6 @@ export function FriendsPage() {
     navigate("/login");
     return;
   }
-  console.log("friend requests", friendRequests)
 
   return (
     <div className="home">
@@ -52,8 +60,16 @@ export function FriendsPage() {
       {friendRequests.length === undefined && <p>Your freind requests</p>}
       {friendRequests.map((friend) => (
         <>
-        <Friend key={friend._id} _id={friend._id} username={friend.username} />
-        <AcceptFriendRequest key={friend._id +"1"} userId={friend._id} setRequest={setRequest}/>
+          <Friend
+            key={friend._id}
+            _id={friend._id}
+            username={friend.username}
+          />
+          <FriendRequest
+            key={friend._id + "1"}
+            userId={friend._id}
+            setRequest={setRequest}
+          />
         </>
       ))}
       <p>Your Friends</p>
@@ -63,6 +79,21 @@ export function FriendsPage() {
       <p>All Users</p>
       {users.map((user) => (
         <User key={user._id} user={user} />
+      ))}
+      <p>Your pending friend requests</p>
+      {pendingFriendRequests.map((friend) => (
+        <>
+          <Friend
+            key={friend._id}
+            _id={friend._id}
+            username={friend.username}
+          />
+          <CancelFriendRequest
+            key={friend._id + "1"}
+            userId={friend._id}
+            setRequest={setRequest}
+          />
+        </>
       ))}
     </div>
   );

@@ -83,3 +83,50 @@ export async function getFriendRequests(token) {
   const data = await response.json();
   return data;
 }
+
+export async function getPendingFriendRequests(token) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await fetch(`${BACKEND_URL}/friends/requests/pending`, requestOptions);
+
+  if (response.status !== 200) {
+    throw new Error("Unable to fetch friends");
+  }
+
+  const data = await response.json();
+  return data;
+}
+
+export async function declineFriendRequest(token, userId) {
+  const requestOptions = {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const newUrl = new URL(`${BACKEND_URL}/friends/accept?userId=${userId}`);
+  const response = await fetch(newUrl.toString(), requestOptions);
+  
+  const data = await response.json()
+  return data;
+}
+
+export async function cancelFriendRequest(token, userId) {
+  const requestOptions = {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const newUrl = new URL(`${BACKEND_URL}/friends/requests/pending?userId=${userId}`);
+  console.log(newUrl)
+  const response = await fetch(newUrl.toString(), requestOptions);
+  
+  const data = await response.json()
+  return data;
+}

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 async function connectToDatabase() {
   const mongoDbUrl = "mongodb://0.0.0.0/acebook";
   if (!mongoDbUrl) {
@@ -14,6 +15,7 @@ const User = require("../models/user");
 const Post = require("../models/post");
 const Message = require('../models/message')
 const Conversation = require('../models/conversation')
+
 async function seedData() {
   try {
     await connectToDatabase();
@@ -42,6 +44,7 @@ async function seedData() {
     });
     const user3 = new User({
       email: "email3@email.com",
+      password: 1234,
       password: "aA1!12222",
       username: "janedoe",
       firstName: "Jane",
@@ -217,3 +220,4 @@ async function seedData() {
 }
 // Run the seeding function
 seedData();
+
