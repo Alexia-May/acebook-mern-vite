@@ -16,7 +16,7 @@ describe("/users", () => {
         .post("/users")
         .send({ 
           email: "someone@example.com",
-          password: "password",
+          password: "aA1!12222",
           username: "someuser",
           firstName: "chris",
           lastName: "marion",
@@ -32,13 +32,13 @@ describe("/users", () => {
         .post("/users")
         .send({ 
           email: "someone@example.com",
-          password: "password",
+          password: "aA1!12222",
           username: "someuser",
           firstName: "chris",
           lastName: "marion",
           gender: "some gender",
           birthday: new Date("2019-01-01"),
-         });
+      });
 
       const users = await User.find();
       const newUser = users[users.length - 1];

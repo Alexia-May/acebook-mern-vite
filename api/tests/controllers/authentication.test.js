@@ -7,7 +7,7 @@ describe("/tokens", () => {
   beforeAll(async () => {
     const user = new User({
       email: "auth-test@test.com",
-      password: "12345678",
+      password: "aA1!12222",
       username: "someuser2",
       firstName: "christophe",
       lastName: "chris",
@@ -30,7 +30,7 @@ describe("/tokens", () => {
     const testApp = supertest(app);
     const response = await testApp
       .post("/tokens")
-      .send({ email: "auth-test@test.com", password: "12345678" });
+      .send({ email: "auth-test@test.com", password: "aA1!12222" });
 
     expect(response.status).toEqual(201);
     expect(response.body.token).not.toEqual(undefined);
@@ -41,7 +41,7 @@ describe("/tokens", () => {
     const testApp = supertest(app);
     const response = await testApp
       .post("/tokens")
-      .send({ email: "non-existent@test.com", password: "1234" });
+      .send({ email: "non-existent@test.com", password: "aA1!12222" });
 
     expect(response.status).toEqual(401);
     expect(response.body.token).toEqual(undefined);

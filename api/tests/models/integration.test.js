@@ -11,7 +11,7 @@ describe("Post model", () => {
   it("given a list of one like, the user document is returned", async () => {
     const user = new User({ 
       email: "someone@example.com",
-      password: "password",
+      password: "aA1!12222",
       username: "janedoe",
       firstName: "Jane",
       lastName: "Doe",
@@ -35,7 +35,7 @@ describe("Post model", () => {
   it("given a list of likes, the user documents is returned", async () => {
     const user1 = new User({
       email: "someone@example.com",
-      password: "password",
+      password: "aA1!12222",
       username: "janedoe",
       firstName: "Jane",
       lastName: "Doe",
@@ -44,7 +44,7 @@ describe("Post model", () => {
     });
     const user2 = new User({
       email: "someone2@example.com",
-      password: "password",
+      password: "aA1!12222",
       username: "janedoe",
       firstName: "Jane",
       lastName: "Doe",
@@ -53,7 +53,7 @@ describe("Post model", () => {
     });
     const user3 = new User({
       email: "someone3@example.com",
-      password: "password",
+      password: "aA1!12222",
       username: "janedoe",
       firstName: "Jane",
       lastName: "Doe",
@@ -82,7 +82,7 @@ describe("Post model", () => {
   it("given a user who created the post, it should return user document", async () => {
     const user1 = new User({
       email: "someone5@example.com",
-      password: "password",
+      password: "aA1!12222",
       username: "janedoe",
       firstName: "Jane",
       lastName: "Doe",
@@ -101,12 +101,12 @@ describe("Post model", () => {
     .populate("user")
 
     expect(postDocument[0].user.email).toEqual("someone5@example.com")
-    expect(postDocument[0].user.password).toEqual("password")
+    expect(postDocument[0].user.password).toEqual("aA1!12222")
   })
   it("given multiple posts and user, it list of posts for a given user", async () => {
     const user1 = new User({
       email: "someone@example.com",
-      password: "password",
+      password: "aA1!12222",
       username: "janedoe",
       firstName: "Jane",
       lastName: "Doe",
@@ -117,7 +117,7 @@ describe("Post model", () => {
 
     const user2 = new User({
       email: "someone2@example.com",
-      password: "password",
+      password: "aA1!12222",
       username: "janedoe",
       firstName: "Jane",
       lastName: "Doe",
@@ -175,7 +175,7 @@ describe("User model", () => {
     
     const user = new User({
       email: "someone@example.com",
-      password: "password",
+      password: "aA1!12222",
       username: "janedoe",
       firstName: "Jane",
       lastName: "Doe",
