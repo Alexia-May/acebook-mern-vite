@@ -29,7 +29,7 @@ describe("/friends", () => {
     await User.deleteMany({})
     user = new User({
       email: "post-test@test.com",
-      password: "12345678",
+      password: "aA1!12222",
       username: "testdummy",
       firstName: "test",
       lastName: "dummy",
@@ -43,7 +43,7 @@ describe("/friends", () => {
     test("POST, when a valid token is present and valid query parameter", async () => {
       const user2 = new User({
         email: "chris@email.com",
-        password: "password",
+        password: "aA1!12222",
         username: "marion",
         firstName: "Alexia",
         lastName: "Chris",
@@ -62,7 +62,7 @@ describe("/friends", () => {
     test("POST, when a valid token is present but an invalid query parameter", async () => {
       const user2 = new User({
         email: "chris@email.com",
-        password: "password",
+        password: "aA1!12222",
         username: "marion",
         firstName: "Alexia",
         lastName: "Chris",
@@ -81,7 +81,7 @@ describe("/friends", () => {
   test("POST, when valid, friend is appened to the friends requestslist", async () => {
     const user2 = new User({
       email: "chris@email.com",
-      password: "password",
+      password: "aA1!12222",
       username: "marion",
       firstName: "Alexia",
       lastName: "Chris",
@@ -102,7 +102,7 @@ describe("/friends", () => {
   test("POST, if friend is already friend return error", async () => {
     const user2 = new User({
       email: "chris@email.com",
-      password: "password",
+      password: "aA1!12222",
       username: "marion",
       firstName: "Alexia",
       lastName: "Chris",
@@ -122,7 +122,7 @@ describe("/friends", () => {
   test("POST, if user is already in friends requests return error", async () => {
     const user2 = new User({
       email: "chris@email.com",
-      password: "password",
+      password: "aA1!12222",
       username: "marion",
       firstName: "Alexia",
       lastName: "Chris",
@@ -150,7 +150,7 @@ describe("/friends", () => {
     test("Get, returns all friends", async () => {
       const user2 = new User({
         email: "chris@email.com",
-        password: "password",
+        password: "aA1!12222",
         username: "marion",
         firstName: "Alexia",
         lastName: "Chris",
@@ -182,7 +182,7 @@ describe("/friends", () => {
     test("GET, given friends return all other users expect logged in user", async () => {
       const user2 = new User({
         email: "chris@email.com",
-        password: "password",
+        password: "aA1!12222",
         username: "marion",
         firstName: "Alexia",
         lastName: "Chris",
@@ -195,7 +195,7 @@ describe("/friends", () => {
 
       const user3 = new User({
         email: "email3@email.com",
-        password: 1234,
+        password: "aA1!12222",
         username: "janedoe",
         firstName: "Jane",
         lastName: "Doe",
@@ -205,7 +205,7 @@ describe("/friends", () => {
 
       const user4 = new User({
         email: "email4@email.com",
-        password: 1234,
+        password: "aA1!12222",
         username: "alexjones",
         firstName: "Alex",
         lastName: "Jones",
@@ -232,7 +232,7 @@ describe("/friends", () => {
     test("POST, when a valid token is present and valid query parameter", async () => {
       const user2 = new User({
         email: "chris@email.com",
-        password: "password",
+        password: "aA1!12222",
         username: "marion",
         firstName: "Alexia",
         lastName: "Chris",
@@ -252,7 +252,7 @@ describe("/friends", () => {
     test("POST, when a valid token is present but an invalid query parameter", async () => {
       const user2 = new User({
         email: "chris@email.com",
-        password: "password",
+        password: "aA1!12222",
         username: "marion",
         firstName: "Alexia",
         lastName: "Chris",
@@ -272,7 +272,7 @@ describe("/friends", () => {
   test("POST, when valid, remove friend from requests and append to both users friends", async () => {
     const user2 = new User({
       email: "chris@email.com",
-      password: "password",
+      password: "aA1!12222",
       username: "marion",
       firstName: "Alexia",
       lastName: "Chris",
@@ -297,7 +297,7 @@ describe("/friends", () => {
   test("POST, if userid isnt in request return error", async () => {
     const user2 = new User({
       email: "chris@email.com",
-      password: "password",
+      password: "aA1!12222",
       username: "marion",
       firstName: "Alexia",
       lastName: "Chris",
@@ -325,7 +325,7 @@ describe("/friends", () => {
     test("Get, returns all friend requests", async () => {
       const user2 = new User({
         email: "chris@email.com",
-        password: "password",
+        password: "aA1!12222",
         username: "marion",
         firstName: "Alexia",
         lastName: "Chris",

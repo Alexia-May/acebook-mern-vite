@@ -30,7 +30,7 @@ describe("/posts", () => {
     await Post.deleteMany({});
     const user = new User({
       email: "post-test@test.com",
-      password: "12345678",
+      password: "aA1!12222",
       username: "testdummy",
       firstName: "test",
       lastName: "dummy",
@@ -64,7 +64,7 @@ describe("/posts", () => {
 
       const user = new User({
         email: "post-test@test.com",
-        password: "12345678",
+        password: "aA1!12222",
         username: "alexia",
         firstName: "test",
         lastName: "dummy",
@@ -150,7 +150,7 @@ describe("/posts", () => {
     test("returns multiple posts for a given specific user", async () => {
       const user1 = new User({
         email: "chris@email.com",
-        password: "password",
+        password: "aA1!12222",
         username: "marion",
         firstName: "Alexia",
         lastName: "Chris",
@@ -161,7 +161,7 @@ describe("/posts", () => {
       
       const user2 = new User({
         email: "user2@email.com",
-        password: "password",
+        password: "aA1!12222",
         username: "user2",
         firstName: "user",
         lastName: "two",
@@ -223,7 +223,7 @@ describe("/posts", () => {
     test("returns post with user information", async () => {
       const user1 = new User({
         email: "chris@email.com",
-        password: "password",
+        password: "aA1!12222",
         username: "marion",
         firstName: "Alexia",
         lastName: "Chris",
@@ -313,7 +313,7 @@ describe("DELETE /posts/:id", () => {
   beforeEach(async () => {
     user1 = new User({
       email: "chris@email.com",
-      password: "password",
+      password: "aA1!12222",
       username: "marion",
       firstName: "Alexia",
       lastName: "Chris",
@@ -326,7 +326,7 @@ describe("DELETE /posts/:id", () => {
 
     const user2 = new User({
       email: "user2@email.com",
-      password: "password",
+      password: "aA1!12222",
       username: "user2",
       firstName: "user",
       lastName: "two",

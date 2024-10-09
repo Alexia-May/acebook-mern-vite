@@ -27,7 +27,7 @@ describe("/user", () => {
       await User.deleteMany({});
       user = new User({
         email: "post-test@test.com",
-        password: "12345678",
+        password: "aA1!12222",
         username: "testdummy",
         firstName: "test",
         lastName: "dummy",
@@ -44,7 +44,7 @@ describe("/user", () => {
     test("GET - given a user_id, it returns the (non sensitive) user information", async () => {
       const user1 = new User({
         email: "chris@email.com",
-        password: "password",
+        password: "aA1!12222",
         username: "marion",
         firstName: "Alexia",
         lastName: "Chris",
@@ -72,7 +72,7 @@ describe("/user", () => {
     test("GET - given a user_id, it returns a new token", async () => {
       const user1 = new User({
         email: "chris@email.com",
-        password: "password",
+        password: "aA1!12222",
         username: "marion",
         firstName: "Alexia",
         lastName: "Chris",
@@ -121,7 +121,7 @@ describe("/user", () => {
     test("GET - given no user_id as a query parameter, it returns only one users", async () => {
       const user1 = new User({
         email: "chris@email.com",
-        password: "password",
+        password: "aA1!12222",
         username: "marion",
         firstName: "Alexia",
         lastName: "Chris",

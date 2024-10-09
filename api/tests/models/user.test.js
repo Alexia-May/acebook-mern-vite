@@ -10,7 +10,7 @@ describe("User model", () => {
   it("has an email address", () => {
     const user = new User({
       email: "someone@example.com",
-      password: "password",
+      password: "aA1!12222",
       username: "someuser",
       firstName: "chris",
       lastName: "marion",
@@ -22,7 +22,7 @@ describe("User model", () => {
   it("given an incorrect email address, won't save", async () => {
     const user = new User({
       email: "incorrect-email!",
-      password: "password",
+      password: "aA1!12222",
       username: "someuser",
       firstName: "chris",
       lastName: "marion",
@@ -36,20 +36,20 @@ describe("User model", () => {
   it("has a password", () => {
     const user = new User({
       email: "someone@example.com",
-      password: "password",
+      password: "aA1!12222",
       username: "someuser",
       firstName: "chris",
       lastName: "marion",
       gender: "some gender",
       birthday: new Date("2019-01-01")
     });
-    expect(user.password).toEqual("password");
+    expect(user.password).toEqual("aA1!12222");
   });
 
   it("has a username", () => {
     const user = new User({
       email: "someone@example.com",
-      password: "password",
+      password: "aA1!12222",
       username: "someuser",
       firstName: "chris",
       lastName: "marion",
@@ -62,7 +62,7 @@ describe("User model", () => {
   it("has a first name", () => {
     const user = new User({
       email: "someone@example.com",
-      password: "password",
+      password: "aA1!12222",
       username: "someuser",
       firstName: "chris",
       username: "someuser",
@@ -77,7 +77,7 @@ describe("User model", () => {
   it("has a last name", () => {
     const user = new User({
       email: "someone@example.com",
-      password: "password",
+      password: "aA1!12222",
       username: "someuser",
       firstName: "chris",
       lastName: "marion",
@@ -90,7 +90,7 @@ describe("User model", () => {
   it("has a gender", () => {
     const user = new User({
       email: "someone@example.com",
-      password: "password",
+      password: "aA1!12222",
       username: "someuser",
       firstName: "chris",
       lastName: "marion",
@@ -103,7 +103,7 @@ describe("User model", () => {
   it("has a birthday", () => {
     const user = new User({
       email: "someone@example.com",
-      password: "password",
+      password: "aA1!12222",
       username: "someuser",
       firstName: "chris",
       lastName: "marion",
@@ -121,7 +121,7 @@ describe("User model", () => {
   it("can save a user", async () => {
     const user = new User({
       email: "someone@example.com",
-      password: "password",
+      password: "aA1!12222",
       username: "someuser",
       firstName: "chris",
       lastName: "marion",
@@ -133,13 +133,13 @@ describe("User model", () => {
     const users = await User.find();
 
     expect(users[0].email).toEqual("someone@example.com");
-    expect(users[0].password).toEqual("password");
+    expect(users[0].password).toEqual("aA1!12222");
   });
 
   it("should return user's one and only friend", async () => {
     const friend = new User({
       email: "friend@example.com",
-      password: "password",
+      password: "aA1!12222",
       username: "someuser",
       firstName: "chris",
       lastName: "marion",
@@ -150,7 +150,7 @@ describe("User model", () => {
     
     const user = new User({
       email: "someone@example.com",
-      password: "password",
+      password: "aA1!12222",
       username: "someuser",
       firstName: "chris",
       lastName: "marion",
@@ -171,7 +171,7 @@ describe("User model", () => {
   it("should return user's friends", async () => {
     const friend1 = new User({
       email: "friend1@example.com",
-      password: "password",
+      password: "aA1!12222",
       username: "someuser",
       firstName: "chris",
       lastName: "marion",
@@ -181,7 +181,7 @@ describe("User model", () => {
     await friend1.save()
     const friend2 = new User({
       email: "friend2@example.com",
-      password: "password",
+      password: "aA1!12222",
       username: "someuser",
       firstName: "chris",
       lastName: "marion",
@@ -192,7 +192,7 @@ describe("User model", () => {
     
     const user = new User({
       email: "someone@example.com",
-      password: "password",
+      password: "aA1!12222",
       username: "someuser",
       firstName: "chris",
       lastName: "marion",
@@ -213,7 +213,7 @@ describe("User model", () => {
   it("given mulitple user, should return the users only friend", async () => {
     const friend1 = new User({
       email: "friend1@example.com",
-      password: "password",
+      password: "aA1!12222",
       username: "someuser3",
       firstName: "christopher",
       lastName: "marianne",
@@ -223,7 +223,7 @@ describe("User model", () => {
     await friend1.save()
     const friend2 = new User({
       email: "friend2@example.com",
-      password: "password",
+      password: "aA1!12222",
       username: "someuser1",
       firstName: "christoph",
       lastName: "marian",
@@ -234,7 +234,7 @@ describe("User model", () => {
     
     const user = new User({
       email: "someone@example.com",
-      password: "password",
+      password: "aA1!12222",
       friends: [friend1._id],
       username: "someuser",
       firstName: "chris",
@@ -254,7 +254,7 @@ describe("User model", () => {
   it("should return user's friend requests", async () => {
     const friend1 = new User({
       email: "friend1@example.com",
-      password: "password",
+      password: "aA1!12222",
       username: "someuser",
       firstName: "chris",
       lastName: "marion",
@@ -264,7 +264,7 @@ describe("User model", () => {
     await friend1.save()
     const friend2 = new User({
       email: "friend2@example.com",
-      password: "password",
+      password: "aA1!12222",
       username: "someuser",
       firstName: "chris",
       lastName: "marion",
@@ -275,7 +275,7 @@ describe("User model", () => {
     
     const user = new User({
       email: "someone@example.com",
-      password: "password",
+      password: "aA1!12222",
       username: "someuser",
       firstName: "chris",
       lastName: "marion",
