@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getConversations } from "../../services/conversations";
 import Conversation from "../../components/Conversation";
+import Melon from "../../components/Melon";
 
 export function MessagesPage() {
 
@@ -37,6 +38,8 @@ export function MessagesPage() {
   console.log("conversations", conversations)
     return (
         <div className="home">
+            <Melon></Melon>
+            <br/>
             <NavBar></NavBar>
             <h1>Messages</h1>
             {/* {isLoading && conversations.map((conversation) => (<Conversation

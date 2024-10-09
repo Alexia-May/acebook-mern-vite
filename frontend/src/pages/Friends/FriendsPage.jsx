@@ -5,6 +5,8 @@ import User from "../../components/User";
 import { getFriends, getNonFriendUsers, getFriendRequests } from "../../services/friends";
 import Friend from "../../components/Friend";
 import { AcceptFriendRequest } from "../../components/AcceptFriendRequest";
+import Melon from "../../components/Melon";
+
 
 export function FriendsPage() {
   const navigate = useNavigate();
@@ -45,7 +47,10 @@ export function FriendsPage() {
   console.log("friend requests", friendRequests)
 
   return (
+    
     <div className="home">
+          <Melon></Melon>
+    <br/>
       <NavBar></NavBar>
 
       <h1>Check out your Friends!</h1>

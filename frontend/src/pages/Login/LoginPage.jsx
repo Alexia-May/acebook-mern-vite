@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Melon from "../../components/Melon";
 
 import { login } from "../../services/authentication";
 
@@ -30,6 +31,8 @@ export function LoginPage() {
 
   return (
     <>
+      <Melon></Melon>
+      <br/>
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">Email:</label>

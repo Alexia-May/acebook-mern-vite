@@ -8,17 +8,8 @@ import "./NavBar.css"
 function NavBar() {
     return (
         <nav>
-            <div className="homeLogo">
-                <a href="/feed">
-                    <div className="logoContainer">
-                        🍉
-                    </div>
-                    <div>
-                        Home
-                    </div>
-                </a>
-            </div>
             <div className="menu">
+                <a href="/feed">Home</a>
                 <a href="/profile">Profile</a>
                 <a href="/friends">Friends</a>
                 <a href="/messages">Messages</a>

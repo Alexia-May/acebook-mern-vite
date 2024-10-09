@@ -28,17 +28,17 @@ test("nav element is present", () => {
     expect(nav).to.exist;
 });
 
-test("renders the home logo", () => {
-    render(
-        <MemoryRouter>
-            <NavBar/>
-        </MemoryRouter>
-    );
+// test("renders the home logo", () => {
+//     render(
+//         <MemoryRouter>
+//             <NavBar/>
+//         </MemoryRouter>
+//     );
 
-    // Check if the home logo with the emoji is rendered
-    const logoElement = screen.getByText("🍉");
-    expect(logoElement).to.exist;
-    });
+//     // Check if the home logo with the emoji is rendered
+//     const logoElement = screen.getByText("🍉");
+//     expect(logoElement).to.exist;
+//     });
 
 test("renders all navigation links", () => {
     render(

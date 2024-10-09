@@ -8,6 +8,7 @@ import UserInfo from "../../components/UserInfo"
 import Username from "../../components/UserName"
 import { AddFriend } from "../../components/AddFriend";
 import { getFriends } from "../../services/friends";
+import Melon from "../../components/Melon";
 
 export function UserPage() {
   const [posts, setPosts] = useState([]);
@@ -88,6 +89,8 @@ export function UserPage() {
   }
   return (
     <>
+      <Melon></Melon>
+      <br/>
       <NavBar />
       <Username
             username={user.username} 

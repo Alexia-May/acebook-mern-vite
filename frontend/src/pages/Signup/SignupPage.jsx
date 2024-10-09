@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signup } from "../../services/authentication";
+import Melon from "../../components/Melon";
 
 export function SignupPage() {
   const [email, setEmail] = useState("");
@@ -64,6 +65,8 @@ export function SignupPage() {
 
   return (
     <>
+      <Melon></Melon>
+      <br/>
       <h2>Signup</h2>
       <form onSubmit={handleSubmit}>
         {/* email */}

@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { getPosts } from "../../services/posts";
 import { getUserInfo } from "../../services/user";
 import ListOfPosts from "../../components/ListOfPosts";
+import Melon from "../../components/Melon";
 
 
 export function ProfilePage() {
@@ -44,6 +45,8 @@ export function ProfilePage() {
   }
   return (
     <>
+      <Melon></Melon>
+      <br/>
       <NavBar></NavBar>
       <ProfileUserName 
         username={user.username}

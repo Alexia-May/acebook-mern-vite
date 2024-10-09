@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getMessages } from "../../services/messages";
 import Message from "../../components/Message";
+import Melon from "../../components/Melon";
 
 
 export function MessagePage() {
@@ -33,6 +34,8 @@ export function MessagePage() {
   console.log("messages", messages)
     return (
         <div className="home">
+            <Melon></Melon>
+            <br/>
             <NavBar></NavBar>
             <h1>Message</h1>
             {isLoading && messages.map((message) => (

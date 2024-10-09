@@ -4,6 +4,7 @@ import { getPosts } from "../../services/posts";
 import { getUserInfo } from "../../services/user";
 import NavBar from "../../components/NavBar";
 import ListOfPosts from "../../components/ListOfPosts";
+import Melon from "../../components/Melon";
 
 export function FeedPage() {
   const [posts, setPosts] = useState([]);
@@ -49,6 +50,8 @@ export function FeedPage() {
 
   return (
     <>
+    <Melon></Melon>
+    <br/>
     <NavBar></NavBar>
       <h2>Posts</h2>
       <ListOfPosts posts={posts} userId={user._id} setDelete={setDelete}/>         
