@@ -30,15 +30,7 @@ function CreatePost(props) {
         setInput(""); // will reset the text field after the message has been submited
         const postData = await getPosts(token)
         localStorage.setItem("token", postData.token);
-        //   .then((data) => {
-
         props.setPosts(postData.posts);
-        //     localStorage.setItem("token", data.token);
-        //   })
-        //   .catch((err) => {
-        //     console.error(err);
-        //     // navigate("/login");
-        //   });
 
         props.setCreatePostState(!props.createPostState);
       } catch (err) {

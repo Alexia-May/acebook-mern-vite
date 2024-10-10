@@ -1,25 +1,48 @@
 import { render, screen } from "@testing-library/react";
 import { MessagesPage } from "../../src/pages/Messages/MessagesPage";
 import { MemoryRouter } from "react-router-dom";
+import { act } from "react-dom/test-utils";
+import { vi } from "vitest";
+import { getConversations } from "../../src/services/conversations";
 
+vi.mock("../../src/services/conversations", () => {
+  const getConversationsMock = vi.fn();
+  return { getConversations: getConversationsMock };
+});
 describe("Messages Page", () => {
-    beforeEach(() => {
+  beforeEach(() => {
     // Clear local storage before each test if authentication/token is necessary
     window.localStorage.removeItem("token");
+  });
+
+  test("It displays a page heading", async () => {
+    window.localStorage.setItem("token", "testToken");
+    getConversations.mockResolvedValue({
+      conversations: [{
+        _id: "1234",
+        participants: [
+          { username: "testuser1"},
+          { username: "testuser2"}
+        ],
+        lastMessage: { message: "hello" },
+        updatedAt: "now"
+      }],
+      token: "newToken",
+    });
+    // Render the component
+    await act(async () => {
+      render(
+        <MemoryRouter>
+          <MessagesPage />
+        </MemoryRouter>
+      );
     });
 
-    test("It displays a page heading", async () => {
-    // Render the component
-    render(
-    <MemoryRouter>
-        <MessagesPage />
-    </MemoryRouter>
-    );
-
     // Look for an <h1> element
-    const heading = await screen.findByRole("heading", { level: 1 });
+    screen.debug;
+    const heading = await screen.findByRole("heading");
 
     // Assert that the text content of the heading is 'Messages'
     expect(heading.textContent).toEqual("Messages");
-    });
+  });
 });

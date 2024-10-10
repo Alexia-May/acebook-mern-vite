@@ -1,5 +1,9 @@
+import { UserName } from "./styles/User.styled";
+
 function Friend(props) {
-    return <article key={props.user._id}>{props.user.email}</article>;
+  return(
+    <UserName data-testid="user-link" href={`/user/${props._id}`}>{props.username}</UserName>
+  )
     }
     
     export default Friend;

@@ -32,32 +32,32 @@ describe("ListOfPosts", () => {
   test("renders multiple posts correctly - usernames in chrological order", () => {
         render(<ListOfPosts posts={mockPosts} />);
         const post = screen.getAllByTestId("user-link");
-        expect(post[0].textContent).toEqual("Alexia")
-        expect(post[2].textContent).toEqual("Marion")
+        expect(post[2].textContent).toEqual("Alexia")
+        expect(post[0].textContent).toEqual("Marion")
         expect(post[1].textContent).toEqual("Alexia")
     });
 
   test("renders multiple posts correctly - message in chrological order", () => {
         render(<ListOfPosts posts={mockPosts} />);
         const post = screen.getAllByTestId("message");
-        expect(post[0].textContent).toEqual("Test message")
-        expect(post[2].textContent).toEqual("Test message 2")
+        expect(post[2].textContent).toEqual("Test message")
+        expect(post[0].textContent).toEqual("Test message 2")
         expect(post[1].textContent).toEqual("Test message 3")
     });
 
     test("renders multiple posts correctly - date created in chrological order", () => {
         render(<ListOfPosts posts={mockPosts} />);
         const post = screen.getAllByTestId("dateCreated");
-        expect(post[0].textContent).toEqual("1:00pm - 07.10.24")
+        expect(post[2].textContent).toEqual("1:00pm - 07.10.24")
         expect(post[1].textContent).toEqual("3:00pm - 07.10.24")
-        expect(post[2].textContent).toEqual("9:31am - 08.10.24")
+        expect(post[0].textContent).toEqual("9:31am - 08.10.24")
     });
 
     test("renders multiple posts correctly - likes in chrological order", () => {
         render(<ListOfPosts posts={mockPosts} />);
         const post = screen.getAllByTestId("numberOfLikes");
-        expect(post[0].textContent).toEqual("15 Likes")
-        expect(post[2].textContent).toEqual("16 Likes")
+        expect(post[2].textContent).toEqual("15 Likes")
+        expect(post[0].textContent).toEqual("16 Likes")
         expect(post[1].textContent).toEqual("20 Likes")
     });
 });

@@ -10,6 +10,7 @@ import { FriendsPage } from "./pages/Friends/FriendsPage.jsx";
 import { MessagesPage } from "./pages/Messages/MessagesPage.jsx";
 import { SettingsPage } from "./pages/Settings/SettingsPage.jsx";
 import { UserPage } from "./pages/User/UserPage.jsx";
+import { MessagePage } from "./pages/Message/MessagePage.jsx";
 
 // docs: https://reactrouter.com/en/main/start/overview
 const router = createBrowserRouter([
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
   {
   path: "/user/:userId",
   element: <UserPage />
+  },
+  {
+  path: "/messages/:conversationId",
+  element: <MessagePage />
   }
 ]);
 

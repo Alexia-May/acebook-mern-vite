@@ -29,7 +29,7 @@ export async function getAllUsers(token) {
     },
   };
 
-  const newUrl = new URL(`${BACKEND_URL}/users`);
+  const newUrl = new URL(`${BACKEND_URL}/user/all`);
   
   const response = await fetch(newUrl.toString(), requestOptions);
 

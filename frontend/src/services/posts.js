@@ -33,7 +33,7 @@ export async function createPost(token, postObject) {
     },
     body: JSON.stringify(postObject),
   };
-
+  
   const response = await fetch(`${BACKEND_URL}/posts`, requestOptions); // /posts refers to all the routes related to posts
 
   if (response.status !== 201) {

@@ -11,7 +11,12 @@ describe("Post model", () => {
   it("given a list of one like, the user document is returned", async () => {
     const user = new User({ 
       email: "someone@example.com",
-      password: "password",
+      password: "aA1!12222",
+      username: "janedoe",
+      firstName: "Jane",
+      lastName: "Doe",
+      gender: "Female",
+      birthday: new Date("1985-07-15"),
     });
     await user.save();
     const post = new Post({
@@ -29,16 +34,31 @@ describe("Post model", () => {
   });
   it("given a list of likes, the user documents is returned", async () => {
     const user1 = new User({
-      email: "someone1@example.com",
-      password: "password",
+      email: "someone@example.com",
+      password: "aA1!12222",
+      username: "janedoe",
+      firstName: "Jane",
+      lastName: "Doe",
+      gender: "Female",
+      birthday: new Date("1985-07-15"),
     });
     const user2 = new User({
       email: "someone2@example.com",
-      password: "password",
+      password: "aA1!12222",
+      username: "janedoe",
+      firstName: "Jane",
+      lastName: "Doe",
+      gender: "Female",
+      birthday: new Date("1985-07-15"),
     });
     const user3 = new User({
       email: "someone3@example.com",
-      password: "password",
+      password: "aA1!12222",
+      username: "janedoe",
+      firstName: "Jane",
+      lastName: "Doe",
+      gender: "Female",
+      birthday: new Date("1985-07-15"),
     });
     await user1.save();
     await user2.save();
@@ -55,14 +75,19 @@ describe("Post model", () => {
     }).populate("likes");
 
     expect(postDocument.likes.length).toEqual(2);
-    expect(postDocument.likes[0].email).toEqual("someone1@example.com");
+    expect(postDocument.likes[0].email).toEqual("someone@example.com");
     expect(postDocument.likes[1].email).toEqual("someone2@example.com");
   });
 
   it("given a user who created the post, it should return user document", async () => {
     const user1 = new User({
-      email: "someone1@example.com",
-      password: "password",
+      email: "someone5@example.com",
+      password: "aA1!12222",
+      username: "janedoe",
+      firstName: "Jane",
+      lastName: "Doe",
+      gender: "Female",
+      birthday: new Date("1985-07-15"),
     });
     await user1.save();
     const post = new Post({
@@ -75,19 +100,29 @@ describe("Post model", () => {
     .find()
     .populate("user")
 
-    expect(postDocument[0].user.email).toEqual("someone1@example.com")
-    expect(postDocument[0].user.password).toEqual("password")
+    expect(postDocument[0].user.email).toEqual("someone5@example.com")
+    expect(postDocument[0].user.password).toEqual("aA1!12222")
   })
   it("given multiple posts and user, it list of posts for a given user", async () => {
     const user1 = new User({
-      email: "someone1@example.com",
-      password: "password",
+      email: "someone@example.com",
+      password: "aA1!12222",
+      username: "janedoe",
+      firstName: "Jane",
+      lastName: "Doe",
+      gender: "Female",
+      birthday: new Date("1985-07-15"),
     });
     await user1.save();
 
     const user2 = new User({
       email: "someone2@example.com",
-      password: "password",
+      password: "aA1!12222",
+      username: "janedoe",
+      firstName: "Jane",
+      lastName: "Doe",
+      gender: "Female",
+      birthday: new Date("1985-07-15"),
     });
     await user2.save();
 
@@ -117,8 +152,8 @@ describe("Post model", () => {
 
 
     expect(postDocument.length).toEqual(2)
-    expect(postDocument[0].user.email).toEqual("someone1@example.com")
-    expect(postDocument[1].user.email).toEqual("someone1@example.com")
+    expect(postDocument[0].user.email).toEqual("someone@example.com")
+    expect(postDocument[1].user.email).toEqual("someone@example.com")
   })
   
 });
@@ -140,7 +175,12 @@ describe("User model", () => {
     
     const user = new User({
       email: "someone@example.com",
-      password: "password",
+      password: "aA1!12222",
+      username: "janedoe",
+      firstName: "Jane",
+      lastName: "Doe",
+      gender: "Female",
+      birthday: new Date("1985-07-15"),
       likedPosts: [post1._id, post2._id]
     });
     await user.save()

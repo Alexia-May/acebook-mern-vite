@@ -3,6 +3,12 @@ const { generateToken } = require("../lib/token");
 const { tokenChecker } = require('../middleware/tokenChecker');
 
 
+async function getAllUsers(req, res) {
+  const users = await User.find();
+  const token = generateToken(req.user_id);
+  res.status(200).json({ users: users, token: token });
+}
+
 async function getUserInfo(req, res) {
     try {
       const token = generateToken(req.user_id); 
@@ -28,7 +34,8 @@ async function getUserInfo(req, res) {
 
 
 const UserInfoController = {
-  getUserInfo: getUserInfo
+  getUserInfo: getUserInfo,
+  getAllUsers: getAllUsers
 };
 
 module.exports = UserInfoController;

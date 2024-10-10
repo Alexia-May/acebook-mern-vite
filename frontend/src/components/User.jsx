@@ -1,4 +1,4 @@
-import { UserName } from './User.styled.js';
+import { UserName } from './styles/User.styled.js';
 
 function User(props) {
   return(

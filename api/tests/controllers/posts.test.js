@@ -27,9 +27,15 @@ function createToken(userId) {
 let token;
 describe("/posts", () => {
   beforeAll(async () => {
+    await Post.deleteMany({});
     const user = new User({
       email: "post-test@test.com",
-      password: "12345678",
+      password: "aA1!12222",
+      username: "testdummy",
+      firstName: "test",
+      lastName: "dummy",
+      gender: "dummy",
+      birthday: new Date("1989-11-12")
     });
     await user.save();
     await Post.deleteMany({});
@@ -58,8 +64,12 @@ describe("/posts", () => {
 
       const user = new User({
         email: "post-test@test.com",
-        password: "12345678",
-        username: "alexia"
+        password: "aA1!12222",
+        username: "alexia",
+        firstName: "test",
+        lastName: "dummy",
+        gender: "dummy",
+        birthday: new Date("1989-11-12"),
       });
       await user.save();
 
@@ -140,18 +150,18 @@ describe("/posts", () => {
     test("returns multiple posts for a given specific user", async () => {
       const user1 = new User({
         email: "chris@email.com",
-        password: "password",
+        password: "aA1!12222",
         username: "marion",
         firstName: "Alexia",
         lastName: "Chris",
         gender: "both",
-        birthday: new Date("0000-12-25"),
+        birthday: new Date("1990-12-25"),
       })
       user1.save()
       
       const user2 = new User({
         email: "user2@email.com",
-        password: "password",
+        password: "aA1!12222",
         username: "user2",
         firstName: "user",
         lastName: "two",
@@ -213,12 +223,12 @@ describe("/posts", () => {
     test("returns post with user information", async () => {
       const user1 = new User({
         email: "chris@email.com",
-        password: "password",
+        password: "aA1!12222",
         username: "marion",
         firstName: "Alexia",
         lastName: "Chris",
         gender: "both",
-        birthday: new Date("0000-12-25"),
+        birthday: new Date("1990-12-25"),
       })
       user1.save()
 
@@ -303,12 +313,12 @@ describe("DELETE /posts/:id", () => {
   beforeEach(async () => {
     user1 = new User({
       email: "chris@email.com",
-      password: "password",
+      password: "aA1!12222",
       username: "marion",
       firstName: "Alexia",
       lastName: "Chris",
       gender: "both",
-      birthday: new Date("0000-12-25"),
+      birthday: new Date("1990-12-25"),
     });
     await user1.save();
 
@@ -316,7 +326,7 @@ describe("DELETE /posts/:id", () => {
 
     const user2 = new User({
       email: "user2@email.com",
-      password: "password",
+      password: "aA1!12222",
       username: "user2",
       firstName: "user",
       lastName: "two",

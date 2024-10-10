@@ -5,8 +5,15 @@ const { tokenChecker } = require('../middleware/tokenChecker');
 function create(req, res) {
   const email = req.body.email;
   const password = req.body.password;
-
-  const user = new User({ email, password });
+  const username = req.body.username;
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const gender = req.body.gender;
+  const birthday = req.body.birthday;
+  
+  const user = new User({ 
+    email, password, username, firstName, lastName, gender, birthday 
+  });
   user
     .save()
     .then((user) => {

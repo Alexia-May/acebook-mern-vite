@@ -5,7 +5,10 @@ const cors = require("cors");
 const usersRouter = require("./routes/users");
 const userRouter = require("./routes/user");
 const postsRouter = require("./routes/posts");
+const friendsRouter = require('./routes/friends')
 const authenticationRouter = require("./routes/authentication");
+const conversationsRouter = require("./routes/conversations")
+const messagesRouter = require('./routes/messages')
 const tokenChecker = require("./middleware/tokenChecker");
 
 const app = express();
@@ -19,11 +22,13 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // API Routes
-app.use("/users", usersRouter);
+app.use("/users",usersRouter);
 app.use("/posts", tokenChecker, postsRouter); // calls the route in api/routes/post.js
-app.use("/friends", tokenChecker, usersRouter);
+app.use("/friends", tokenChecker, friendsRouter);
 app.use("/tokens", authenticationRouter);
 app.use("/user", tokenChecker, userRouter);
+app.use("/conversations", tokenChecker, conversationsRouter )
+app.use("/messages", tokenChecker, messagesRouter)
 
 
 // 404 Handler
