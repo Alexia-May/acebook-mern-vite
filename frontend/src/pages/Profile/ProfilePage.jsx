@@ -58,6 +58,8 @@ export function ProfilePage() {
   return (
     <>
       <NavBar></NavBar>
+      <>
+      </>
       <ProfileUserName 
         username={user.username}
         />

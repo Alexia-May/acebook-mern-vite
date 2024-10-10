@@ -48,7 +48,7 @@ export const Menu = styled.div`
         font-weight: 500;
 
         &:hover {
-        color: #007bff;
+        color: #6A9838;
         }
     }
 
@@ -60,7 +60,7 @@ export const Menu = styled.div`
         color: black;
 
         &:hover {
-        color: #007bff;
+        color: #6A9838;
         }
     }
 `;
