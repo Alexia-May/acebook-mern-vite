@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
+  width: 80%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -12,7 +13,7 @@ const Container = styled.div`
 `;
 
 const Image = styled.img`
-  width: 8.333%;
+  width: 8%;
 `;
 
 const InputContainer = styled.div`
