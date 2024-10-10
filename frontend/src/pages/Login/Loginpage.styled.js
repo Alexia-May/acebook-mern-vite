@@ -11,8 +11,8 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 export const Wrapper = styled.div`
-  display: -webkit-box;
-  display: -ms-flexbox;
+  /* display: -webkit-box;
+  display: -ms-flexbox; */
   display: flex;
   height: 100vh;
   -webkit-box-align: center;
@@ -57,8 +57,8 @@ export const Input = styled.input`
   height: 40px;
   width: 100%;
   padding: 15px;
-  background-color: #f1f9ff;
-  border: 2px solid #bce0fd;
+  background-color: white;
+  border: 1px solid #333333;
   border-radius: 8px;
 
   @media (min-width: 542px) {
@@ -69,7 +69,7 @@ export const Input = styled.input`
 export const Button = styled.button`
   height: 40px;
   width: 100%;
-  background-color: #258de6;
+  background-color: #6A9838;
   color: white;
   text-transform: uppercase;
   letter-spacing: 1px;
