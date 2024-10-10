@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+export const FormRoot = styled.div`
+    padding: 3em;
+`
+
 export const FormWrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -26,7 +30,7 @@ export const FormTitle = styled.h2`
 `;
 
 export const Label = styled.label`
-    display: block;
+    display: flex;
     margin-bottom: 8px;
     font-size: 14px;
     font-weight: bold;
@@ -47,7 +51,7 @@ export const Input = styled.input`
 `;
 
 export const SubmitButton = styled.input`
-    background-color: #3498db;
+    background-color: #6A9838;
     color: white;
     padding: 10px 15px;
     border: none;
