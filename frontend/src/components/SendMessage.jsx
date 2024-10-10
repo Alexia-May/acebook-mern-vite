@@ -1,47 +1,36 @@
-import "./CreatePost.css";
+
 import { useState } from "react";
-import { createPost } from "../services/posts";
-import { getPosts } from "../services/posts";
-function CreatePost(props) {
-  // const [wordCount, setWordCount] = useState(0);
+import { sendMessage } from "../services/messages";
+import { useNavigate } from "react-router-dom";
+function SendMessage(props) {
   const [input, setInput] = useState("");
+  const navigate = useNavigate()
 
   const handleChange = (event) => {
-    // stores the form text as 'input' variable
     setInput(event.target.value); // we can set the input by typing in the form
-    // const length = input.split("").length;
-    // if (length <= 500) {
-    //   setWordCount(length);
-    // }
   };
   const handleSubmit = async (event) => {
     event.preventDefault(); // prevents the default (changing page)
     const token = localStorage.getItem("token"); // getting the token from browser storage
-    const post = {
+    const message = {
       // creates the post object
       message: input,
-      dateCreated: new Date(),
+      sentAt: new Date(),
     };
 
     const loggedIn = token !== null;
     if (loggedIn) {
       try {
-        await createPost(token, post);
+        await sendMessage(token, props.conversationId, message);
         setInput(""); // will reset the text field after the message has been submited
-        const postData = await getPosts(token)
-        localStorage.setItem("token", postData.token);
-        props.setPosts(postData.posts);
-
-        props.setCreatePostState(!props.createPostState);
+        props.setMessageState(!props.isMessageState);
       } catch (err) {
         console.log(err);
+        navigate("/login")
       }
     }
   };
   return (
-    <div className="CreateContainer">
-      <h3>Create a Post</h3>
-      <div className="FieldContainer">
         <form onSubmit={handleSubmit}>
           <textarea
             data-testid="messageForm"
@@ -50,12 +39,9 @@ function CreatePost(props) {
             title="MessageBox"
             value={input}
           />
-          {/* <p className="WordCounter">{`${wordCount}/500`}</p> */}
-          <button className="SubmitButton">Submit</button>
+          <button>Send</button>
         </form>
-      </div>
-    </div>
   );
 }
 
-export default CreatePost;
+export default SendMessage;

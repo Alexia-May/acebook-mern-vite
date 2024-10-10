@@ -4,11 +4,13 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getMessages } from "../../services/messages";
 import Message from "../../components/Message";
+import SendMessage from "../../components/SendMessage";
 
 
 export function MessagePage() {
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false)
+  const [isMessageState, setMessageState] = useState(false)
 
   const navigate = useNavigate();
   const { conversationId } = useParams();
@@ -29,7 +31,7 @@ export function MessagePage() {
           navigate("/login");
         });
     }
-  }, [navigate, conversationId]);
+  }, [navigate, conversationId, isMessageState]);
   console.log("messages", messages)
     return (
         <div className="home">
@@ -42,6 +44,7 @@ export function MessagePage() {
                 sender={message.senderId.username}
               />
             ))}
+            <SendMessage conversationId={conversationId} setMessageState={setMessageState} isMessageState={isMessageState}/>
         </div>
     );
 }

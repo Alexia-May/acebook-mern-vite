@@ -124,7 +124,20 @@ export async function cancelFriendRequest(token, userId) {
     },
   };
   const newUrl = new URL(`${BACKEND_URL}/friends/requests/pending?userId=${userId}`);
-  console.log(newUrl)
+  const response = await fetch(newUrl.toString(), requestOptions);
+  
+  const data = await response.json()
+  return data;
+}
+
+export async function deleteFriend(token, userId) {
+  const requestOptions = {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const newUrl = new URL(`${BACKEND_URL}/friends?userId=${userId}`);
   const response = await fetch(newUrl.toString(), requestOptions);
   
   const data = await response.json()

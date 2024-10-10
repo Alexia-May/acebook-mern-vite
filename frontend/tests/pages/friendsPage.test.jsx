@@ -4,7 +4,7 @@ import { FriendsPage } from "../../src/pages/Friends/FriendsPage";
 import { vi } from "vitest";
 import { useNavigate } from "react-router-dom";
 import { act } from "react-dom/test-utils";
-import { getFriends, getNonFriendUsers, getFriendRequests } from "../../src/services/friends";
+import { getFriends, getNonFriendUsers, getFriendRequests, getPendingFriendRequests } from "../../src/services/friends";
 
 // Mocking React Router's useNavigate function
 vi.mock("react-router-dom", () => {
@@ -21,10 +21,12 @@ vi.mock("../../src/services/friends", () => {
   const getFriendsMock = vi.fn();
   const getNonFriendUsersMock = vi.fn();
   const getFriendRequestsMock = vi.fn()
+  const getPendingFriendRequestsMock = vi.fn()
   return {
     getFriends: getFriendsMock,
     getNonFriendUsers: getNonFriendUsersMock,
-    getFriendRequests: getFriendRequestsMock
+    getFriendRequests: getFriendRequestsMock,
+    getPendingFriendRequests: getPendingFriendRequestsMock 
   };
 });
 describe("Testing Friends Page", () => {
@@ -33,6 +35,10 @@ describe("Testing Friends Page", () => {
     vi.resetAllMocks();
     await getFriendRequests.mockResolvedValue({
       friendRequests: [],
+      token: "newToken",
+    });
+    await getPendingFriendRequests.mockResolvedValue({
+      pendingRequests: [],
       token: "newToken",
     });
   });

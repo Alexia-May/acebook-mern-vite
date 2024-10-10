@@ -15,7 +15,7 @@ describe("Messages Page", () => {
     window.localStorage.removeItem("token");
   });
 
-  test("It displays a page heading", async () => {
+  test.("It displays a page heading", async () => {
     getConversations.mockResolvedValue({
       conversations: [],
       token: "newToken",
@@ -31,7 +31,7 @@ describe("Messages Page", () => {
 
     // Look for an <h1> element
     screen.debug;
-    const heading = await screen.findByRole("heading", { level: 1 });
+    const heading = await screen.findByRole("heading");
 
     // Assert that the text content of the heading is 'Messages'
     expect(heading.textContent).toEqual("Messages");

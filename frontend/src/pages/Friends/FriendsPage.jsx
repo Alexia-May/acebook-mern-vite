@@ -11,6 +11,8 @@ import {
 import Friend from "../../components/Friend";
 import { FriendRequest } from "../../components/AcceptFriendRequest";
 import { CancelFriendRequest } from "../../components/CancelFriendRequest";
+import { Button } from "../../components/Button"
+import { handleDeclineClick, handleAcceptClick } from "../../handlers/friendRequests";
 
 export function FriendsPage() {
   const navigate = useNavigate();
@@ -26,9 +28,7 @@ export function FriendsPage() {
       const loggedIn = token !== null;
       try {
         if (loggedIn) {
-          const pendingFriendRequestsData = await getPendingFriendRequests(
-            token
-          );
+          const pendingFriendRequestsData = await getPendingFriendRequests(token);
           setPendingFriendRequests(pendingFriendRequestsData.pendingRequests);
           const friendRequestsData = await getFriendRequests(token);
           setFriendRequests(friendRequestsData.friendRequests);
@@ -65,11 +65,8 @@ export function FriendsPage() {
             _id={friend._id}
             username={friend.username}
           />
-          <FriendRequest
-            key={friend._id + "1"}
-            userId={friend._id}
-            setRequest={setRequest}
-          />
+          <Button handleClick={() => handleDeclineClick(setRequest, friend._id)} buttonText={"Decline"}/>
+          <Button handleClick={() => handleAcceptClick(setRequest, friend._id)} buttonText={"Accept"}/>
         </>
       ))}
       <p>Your Friends</p>
