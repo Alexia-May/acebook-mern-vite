@@ -9,7 +9,7 @@ describe("ListOfPosts", () => {
       username: "Alexia",
       },
       dateCreated: "2024-10-07T13:00:07.120Z",
-      noOfLikes: "15",
+      likes: []
     },
     {_id: "2",
         message: "Test message 2",
@@ -17,7 +17,7 @@ describe("ListOfPosts", () => {
           username: "Marion",
         },
         dateCreated: "2024-10-08T09:31:00.120Z",
-        noOfLikes: "16",
+        likes: ["123", "124"]
     },
     {_id: "3",
         message: "Test message 3",
@@ -25,7 +25,7 @@ describe("ListOfPosts", () => {
             username: "Alexia",
         },
         dateCreated: "2024-10-07T15:00:07.120Z",
-        noOfLikes: "20",
+        likes: ["123", "124", "125"]
     },
   ];
 
@@ -56,8 +56,8 @@ describe("ListOfPosts", () => {
     test("renders multiple posts correctly - likes in chrological order", () => {
         render(<ListOfPosts posts={mockPosts} />);
         const post = screen.getAllByTestId("numberOfLikes");
-        expect(post[2].textContent).toEqual("15 Likes")
-        expect(post[0].textContent).toEqual("16 Likes")
-        expect(post[1].textContent).toEqual("20 Likes")
+        expect(post[2].textContent).toEqual("0 Likes")
+        expect(post[0].textContent).toEqual("2 Likes")
+        expect(post[1].textContent).toEqual("3 Likes")
     });
 });

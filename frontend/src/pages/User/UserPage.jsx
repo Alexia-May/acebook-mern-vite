@@ -6,7 +6,6 @@ import NavBar from "../../components/NavBar";
 import ListOfPosts from "../../components/ListOfPosts";
 import UserInfo from "../../components/UserInfo";
 import Username from "../../components/UserName";
-import { AddFriend } from "../../components/AddFriend";
 import { getFriends } from "../../services/friends";
 import { Button } from "../../components/Button";
 import { handleDeleteFriendClick } from "../../handlers/friends";
@@ -87,6 +86,7 @@ export function UserPage() {
       setIsFriend(hasId);
     }
   }, [user, friends]);
+  console.log(isFriend)
 
   const token = localStorage.getItem("token");
   if (!token) {
@@ -103,7 +103,7 @@ export function UserPage() {
         birthday={user.birthday}
       />
       <br />
-      {isFriend && <Button handleClick={() => handleDeleteFriendClick(navigate, userId)} buttonText={"Remove"}/>}
+      {isFriend && <Button handleClick={() => handleDeleteFriendClick(navigate, userId)} buttonText={"Remove Friend"}/>}
       {!isFriend && <Button handleClick={() => handleAddFriendClick(navigate, userId)} buttonText={"Add Friend"}/>}
       <h2>Posts</h2>
       <ListOfPosts posts={posts} />

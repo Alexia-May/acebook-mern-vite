@@ -15,9 +15,11 @@ function ListOfPosts(props) { //creating shallow array for good practice (no dir
         message={post.message} 
         dateCreated={post.dateCreated}
         username={post.user?.username}
-        noOfLikes={post.noOfLikes}
+        likes={post.likes}
         setPosts={post.setPosts}
         setDelete={props.setDelete}
+        likeState={props.likeState}
+        setLikeState={props.setLikeState}
       />
       ))}
     </div>

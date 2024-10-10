@@ -61,11 +61,74 @@ async function deletePost(req, res) {
   }
 }
 
+async function addLike(req, res) {
+  try {
+    const postId = req.params.id;
+    const token = generateToken(req.user_id); 
+    // Find the user
+    const user = await User.findById(req.user_id)
 
+    // Find the post by ID
+    const post = await Post.findById(postId);
+    
+    // if post not found
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+    
+    // add the like
+    console.log("user id api", user._id)
+    post.likes.push(user._id)
+    // await post.updateOne({$addToSet : {likes: req.user_id}})
+    await post.save()
+    console.log("likes", post.likes)
+    const newToken = generateToken(req.user_id);
+
+    res.status(200).json({ message: "Post deleted", token: newToken });
+
+
+  } catch (error) {
+    console.error("Error adding like to the post:", error); // Log the error
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+
+};
+
+async function deleteLike(req, res) {
+  try {
+    const postId = req.params.id;
+    const token = generateToken(req.user_id); 
+    // Find the user
+    const user = await User.findById(req.user_id)
+
+    // Find the post by ID
+    const post = await Post.findById(postId);
+    
+    // if post not found
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+    
+    // add the like
+    post.likes.pull(user._id)
+    await post.save()
+    console.log("likes", post.likes)
+    const newToken = generateToken(req.user_id);
+
+    res.status(200).json({ message: "Post deleted", token: newToken });
+
+
+  } catch (error) {
+    console.error("Error adding like to the post:", error); // Log the error
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
 const PostsController = {
   getAllPosts,
   createPost,
   deletePost,
+  addLike,
+  deleteLike
 };
 
 module.exports = PostsController;

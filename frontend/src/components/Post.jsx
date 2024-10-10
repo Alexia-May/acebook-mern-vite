@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react';
-import  DeletePostButton  from "./DeletePostButton.jsx";
-import User from './User.jsx'
+import { useState, useEffect } from "react";
+import DeletePostButton from "./DeletePostButton.jsx";
+import { handleAddLikeClick, handleDeleteLikeClick } from "../handlers/posts.js";
+import User from "./User.jsx";
+// import { Button } from "./Button.jsx";
 
 import {
   Container,
-  Button,
+  StyledButton,
   PostContainer,
   PostHeader,
   UserContainer,
@@ -12,11 +14,13 @@ import {
   TimeStamp,
   TextContent,
   Footer,
-  Image
-} from './styles/Post.styled.js'; 
+  Image,
+} from "./styles/Post.styled.js";
 
 function Post(props) {
-  const [avatar, setAvatar] = useState('');
+  const [avatar, setAvatar] = useState("");
+  const [isLiked, setisLiked] = useState(false);
+  const [isUserPost, setIsUserPost] = useState(false)
 
   const getDateString = (dateString) => {
     const date = new Date(dateString);
@@ -36,48 +40,70 @@ function Post(props) {
     return `${hour}:${minutes}${meridium} - ${day}.${month}.${year}`;
   };
 
-
   useEffect(() => {
     const getRandomAvatar = () => {
-      const avatarCount = 6; 
+      const avatarCount = 6;
       const randomIndex = Math.floor(Math.random() * avatarCount) + 1;
       return `src/assets/userAvatars/${randomIndex}.svg`;
     };
     setAvatar(getRandomAvatar());
   }, []);
 
+  useEffect(() => {
+    console.log("likes", props.likes)
+    console.log("userid", props.userId)
+    if (props?.likes?.includes(props.userId)) {
+      setisLiked(true);
+    } else {
+      setisLiked(false)
+    }
+    if (props.postCreatorId === props.userId) {
+      setIsUserPost(true)
+    } else {
+      setIsUserPost(false)
+    }
+  }, [props.userId, props.likes, props.postCreatorId]);
+
+  console.log("like state ", isLiked)
+
+
+
   return (
-    <Container>
-    <PostContainer key={props.id}>
-      <PostHeader>
-        <UserContainer>
-          <Image src={avatar} alt="User Avatar" />
-          <UserDetails>
-            <User 
-              user={{ 
-                _id: props.user?._id, 
-                username: props.username
-              }} 
+    <>
+      <Container>
+        <PostContainer key={props.id}>
+          <PostHeader>
+            <UserContainer>
+              <Image src={avatar} alt="User Avatar" />
+              <UserDetails>
+                <User
+                  user={{
+                    _id: props.user?._id,
+                    username: props.username,
+                  }}
+                />
+                <TimeStamp data-testid="dateCreated">
+                  {getDateString(props.dateCreated)}
+                </TimeStamp>
+              </UserDetails>
+            </UserContainer>
+          </PostHeader>
+          <TextContent data-testid="message">{props.message}</TextContent>
+          <Footer>
+            {!isUserPost && isLiked && <button onClick={() => handleDeleteLikeClick(props.likeState, props.setLikeState, props.postId)}>Remove Like</button>}
+            {!isUserPost && !isLiked && <button onClick={() => handleAddLikeClick(props.likeState, props.setLikeState, props.postId)}>Like</button>}
+            <div data-testid="numberOfLikes">{`${props.likes?.length} Likes`}</div>
+            <DeletePostButton
+              postId={props.postId}
+              userId={props.userId}
+              postCreatorId={props.postCreatorId}
+              setPosts={props.setPosts}
+              setDelete={props.setDelete}
             />
-            <TimeStamp data-testid="dateCreated">
-              {getDateString(props.dateCreated)}
-            </TimeStamp>
-          </UserDetails>
-        </UserContainer>
-      </PostHeader>
-      <TextContent data-testid="message">{props.message}</TextContent>
-      <Footer>
-        <Button data-testid="numberOfLikes">{props.noOfLikes} Likes</Button>
-        <DeletePostButton
-            postId={props.postId} 
-            userId={props.userId} 
-            postCreatorId={props.postCreatorId} 
-            setPosts={props.setPosts}
-            setDelete={props.setDelete} 
-          />
-      </Footer>
-    </PostContainer>
-    </Container>
+          </Footer>
+        </PostContainer>
+      </Container>
+    </>
   );
 }
 
