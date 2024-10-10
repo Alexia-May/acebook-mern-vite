@@ -1,9 +1,16 @@
-## Acebook MERN Template
+## Welcome to the Watermelon Club!
 
-In this project, you are task with working on an existing application. A
-significant part of the challenge will be to familiarise yourself with the
-codebase you've inherited, as you work to **improve and extend** it.
+   ```
+               _                           _             
+              | |                         | |            
+__      ____ _| |_ ___ _ __ _ __ ___   ___| | ___  _ __  
+\ \ /\ / / _` | __/ _ \ '__| '_ ` _ \ / _ \ |/ _ \| '_ \ 
+ \ V  V / (_| | ||  __/ |  | | | | | |  __/ | (_) | | | |
+  \_/\_/ \__,_|\__\___|_|  |_| |_| |_|\___|_|\___/|_| |_|
 
+   ```
+
+                                              
 ### Structure
 
 This repo contains two applications:
@@ -17,11 +24,8 @@ run separately.
 ### Documentation
 
 [More documentation of the codebase and its architecture can be found here.](./DOCUMENTATION.md)
-It's recommended you all read the suggested docs _after making sure the whole
-setup below worked for everyone_. Then work together on a diagram describing how
-the application works.
 
-### Card wall
+### Watermelon Club Trello board
 
 https://trello.com/b/U5ezh6qc/watermelon-club
 
@@ -37,27 +41,24 @@ If you haven't already, make sure you have node and NVM installed.
    ```
    Then follow the instructions to update your `~/.bash_profile`.
 2. Open a new terminal
-3. Install the latest version of [Node.js](https://nodejs.org/en/), (`20.5.0` at
-   time of writing).
+3. Install the latest version of [Node.js](https://nodejs.org/en/).
    ```
    nvm install 20
    ```
 
 ### Set up your project
 
-1. Have one team member fork this repository
-2. Rename the fork to `acebook-<team name>`
-3. Every team member clone the fork to their local machine
-4. Install dependencies for both the `frontend` and `api` applications:
+1. Clone the repo to your local machine
+2. Install dependencies for both the `frontend` and `api` applications:
    ```
    cd frontend
    npm install
    cd ../api
    npm install
    ```
-5. Install an ESLint plugin for your editor, for example
+3. Install an ESLint plugin for your editor, for example
    [ESLint for VSCode](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-6. Install MongoDB
+4. Install MongoDB
    ```
    brew tap mongodb/brew
    brew install mongodb-community@6.0
@@ -65,7 +66,7 @@ If you haven't already, make sure you have node and NVM installed.
    _Note:_ If you see a message that says
    `If you need to have mongodb-community@6.0 first in your PATH, run:`, follow
    the instruction. Restart your terminal after this.
-7. Start MongoDB
+5. Start MongoDB
 
    ```
    brew services start mongodb-community@6.0
@@ -114,10 +115,9 @@ In a new terminal session...
 ```
 
 You should now be able to open your browser and go to
-`http://localhost:5174/signup` to create a new user.
+`http://localhost:5173/signup` to create a new user.
 
 Then, after signing up, you should be able to log in by going to
-`http://localhost:5174/login`.
+`http://localhost:5173/login`.
 
-After logging in, you won't see much but you can create posts using PostMan and
-they should then show up in the browser if you refresh the page.
+After logging in, you will be able to create/delete/like/unlike a post, add/remove a friend, approve/decline a friend request and send a direct message to one of your friends.
