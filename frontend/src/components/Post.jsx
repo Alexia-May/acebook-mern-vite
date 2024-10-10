@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { getRandomAvatar } from "../handlers/avatarUtils.js"
 import  DeletePostButton  from "./DeletePostButton.jsx";
 import User from './User.jsx'
 
@@ -38,11 +39,6 @@ function Post(props) {
 
 
   useEffect(() => {
-    const getRandomAvatar = () => {
-      const avatarCount = 6; 
-      const randomIndex = Math.floor(Math.random() * avatarCount) + 1;
-      return `src/assets/userAvatars/${randomIndex}.svg`;
-    };
     setAvatar(getRandomAvatar());
   }, []);
 

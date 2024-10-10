@@ -1,24 +1,41 @@
 import "./CreatePost.css";
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { createPost } from "../services/posts";
 import { getPosts } from "../services/posts";
+import { getRandomAvatar } from "../handlers/avatarUtils.js"
+import {
+  CreateContainer,
+  Avatar,
+  InputContainer,
+  Textarea,
+  SubmitButton
+} from "./styles/CreatePost.styled.js";
+
 function CreatePost(props) {
-  // const [wordCount, setWordCount] = useState(0);
+  
   const [input, setInput] = useState("");
+  const [avatar, setAvatar] = useState("");
+  const textareaRef = useRef(null);
+
+  useEffect(() => {
+    setAvatar(getRandomAvatar()); 
+  }, []);
 
   const handleChange = (event) => {
-    // stores the form text as 'input' variable
-    setInput(event.target.value); // we can set the input by typing in the form
-    // const length = input.split("").length;
-    // if (length <= 500) {
-    //   setWordCount(length);
-    // }
+    setInput(event.target.value); 
+    autoResizeTextarea();
   };
+
+  const autoResizeTextarea = () => {
+    const textarea = textareaRef.current;
+    textarea.style.height = "auto"; 
+    textarea.style.height = `${textarea.scrollHeight}px`; 
+  };
+
   const handleSubmit = async (event) => {
-    event.preventDefault(); // prevents the default (changing page)
-    const token = localStorage.getItem("token"); // getting the token from browser storage
+    event.preventDefault(); 
+    const token = localStorage.getItem("token"); 
     const post = {
-      // creates the post object
       message: input,
       dateCreated: new Date(),
     };
@@ -27,7 +44,7 @@ function CreatePost(props) {
     if (loggedIn) {
       try {
         await createPost(token, post);
-        setInput(""); // will reset the text field after the message has been submited
+        setInput(""); 
         const postData = await getPosts(token)
         localStorage.setItem("token", postData.token);
         props.setPosts(postData.posts);
@@ -39,22 +56,27 @@ function CreatePost(props) {
     }
   };
   return (
-    <div className="CreateContainer">
-      <h3>Create a Post</h3>
-      <div className="FieldContainer">
+    <CreateContainer>
+      <Avatar src={avatar} alt="User Avatar" />
+      <InputContainer>
         <form onSubmit={handleSubmit}>
-          <textarea
-            data-testid="messageForm"
-            onChange={handleChange}
-            maxLength="500"
-            title="MessageBox"
+          <Textarea
+            ref={textareaRef}
+            placeholder="Share what is on your mind..."
             value={input}
+            onChange={handleChange}
+            data-testid="messageForm"
+            maxLength="500"
           />
-          {/* <p className="WordCounter">{`${wordCount}/500`}</p> */}
-          <button className="SubmitButton">Submit</button>
+          <SubmitButton type="submit">
+            <img
+              src="src/assets/sendPost.svg"
+              alt="Send Post Image"
+            />
+          </SubmitButton>
         </form>
-      </div>
-    </div>
+      </InputContainer>
+    </CreateContainer>
   );
 }
 

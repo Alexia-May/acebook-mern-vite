@@ -1,11 +1,12 @@
 import Post from "./Post";
+import { Container } from "./styles/ListOfPosts.js";
 
 function ListOfPosts(props) { //creating shallow array for good practice (no direct mutation in React)
   const sortedPosts = [...props.posts].sort((a, b) => new Date(b.dateCreated) - new Date(a.dateCreated));
   
 
   return(
-    <div className="feed-component" role="feed-component"> 
+    <Container> 
       {sortedPosts.map((post) => (
       <Post 
         key={post._id} 
@@ -20,7 +21,7 @@ function ListOfPosts(props) { //creating shallow array for good practice (no dir
         setDelete={props.setDelete}
       />
       ))}
-    </div>
+    </Container>
   );
 }
 
