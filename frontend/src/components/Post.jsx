@@ -75,7 +75,7 @@ function Post(props) {
               <UserDetails>
                 <User
                   user={{
-                    _id: props.user?._id,
+                    _id: props.postCreatorId,
                     username: props.username,
                   }}
                 />
