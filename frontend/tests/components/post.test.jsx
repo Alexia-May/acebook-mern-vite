@@ -64,9 +64,9 @@ describe("Post", () => {
   
   test("displays the number of likes in the component", () => {
     const id = "123";
-    const likes = "10";
+    const likes = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
-    render(<Post id={id} noOfLikes={likes} />);
+    render(<Post id={id} likes={likes} />);
 
     const likesEl = screen.getByTestId("numberOfLikes");
     expect(likesEl.textContent).toBe("10 Likes"); 

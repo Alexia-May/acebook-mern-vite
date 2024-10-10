@@ -12,6 +12,7 @@ export function FeedPage() {
   const [createPostState, setCreatePostState] = useState(false);
   const [user, setUser] = useState([]);
   const [deleted, setDelete] = useState(false);
+  const [likeState, setLikeState] = useState(false)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,7 +27,7 @@ export function FeedPage() {
           console.error(err);
         });
     }
-  }, [navigate, deleted, createPostState]);
+  }, [navigate, deleted, createPostState, likeState]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -50,6 +51,8 @@ export function FeedPage() {
     return;
   }
 
+  console.log("user", user)
+
   return (
     <>
     <NavBar></NavBar>
@@ -59,7 +62,7 @@ export function FeedPage() {
         createPostState={createPostState}
         />
       <h2>Feed</h2>
-      <ListOfPosts posts={posts} userId={user._id} setDelete={setDelete}/>         
+      <ListOfPosts posts={posts} userId={user._id} setDelete={setDelete} likeState={likeState} setLikeState={setLikeState}/>         
     </>
   );
 }

@@ -63,7 +63,7 @@ const TimeStamp = styled.span`
   font-size: 0.875rem;
 `;
 
-const Button = styled.button`
+const StyledButton = styled.button`
   font-family: 'DM Sans', sans-serif;
   display: flex;
   align-items: center;
@@ -78,7 +78,7 @@ const Button = styled.button`
   }
 `;
 
-const DeleteButton = styled(Button)`
+const DeleteButton = styled(StyledButton)`
   background-color: #FF6A6A;
 
   &:hover {
@@ -100,6 +100,6 @@ const Footer = styled.div`
 
 export {
   Container, Image, InputContainer, Input, ImageIcon, PostContainer, 
-  PostHeader, UserContainer, UserDetails, TimeStamp, Button, DeleteButton,
+  PostHeader, UserContainer, UserDetails, TimeStamp, StyledButton, DeleteButton,
   TextContent, Footer
 };
