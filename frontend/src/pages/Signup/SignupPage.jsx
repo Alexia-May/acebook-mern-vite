@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signup } from "../../services/authentication";
+import { FormWrapper, FormContainer, FormTitle, Label, Input, SubmitButton} from './Signup.styled';
+import { Link } from "react-router-dom";
 
 export function SignupPage() {
   const [email, setEmail] = useState("");
@@ -71,12 +73,13 @@ export function SignupPage() {
   }
 
   return (
-    <>
-      <h2>Signup</h2>
-      <form onSubmit={handleSubmit}>
+    <FormWrapper>
+      <FormContainer onSubmit={handleSubmit}>
+      <FormTitle>Signup</FormTitle>
+
         {/* email */}
-        <label htmlFor="email">Email:</label>
-        <input
+        <Label htmlFor="email">Email:</Label>
+        <Input
           placeholder="katherine.johnson@email.com"
           id="email"
           type="email"
@@ -86,8 +89,8 @@ export function SignupPage() {
         {emailError && <p style={{ color: 'red' }}>{emailError}</p>}
 
         {/* password */}
-        <label htmlFor="password">Password:</label>
-        <input
+        <Label htmlFor="password">Password:</Label>
+        <Input
           placeholder="Include letters and numbers"
           id="password"
           type="password"
@@ -97,8 +100,8 @@ export function SignupPage() {
         {passwordError && <p style={{ color: 'red' }}>{passwordError}</p>}
 
         {/* username */}
-        <label htmlFor="username">Username:</label>
-        <input
+        <Label htmlFor="username">Username:</Label>
+        <Input
           placeholder="NASA_Kathy"
           id="username"
           type="text"
@@ -107,8 +110,8 @@ export function SignupPage() {
         />
 
         {/* first name */}
-        <label htmlFor="firstName">First name:</label>
-        <input
+        <Label htmlFor="firstName">First name:</Label>
+        <Input
           placeholder="Katherine"
           id="firstName"
           type="text"
@@ -117,8 +120,8 @@ export function SignupPage() {
         />
 
          {/* last name */}
-        <label htmlFor="lastName">Last name:</label>
-        <input
+        <Label htmlFor="lastName">Last name:</Label>
+        <Input
           placeholder="Johnson"
           id="lastName"
           type="text"
@@ -127,8 +130,8 @@ export function SignupPage() {
         />
 
          {/* gender */}
-        <label htmlFor="gender">Pronouns:</label>
-        <input
+        <Label htmlFor="gender">Pronouns:</Label>
+        <Input
           placeholder="She/her"
           id="gender"
           type="text"
@@ -137,8 +140,8 @@ export function SignupPage() {
         />
 
          {/* birthday */}
-        <label htmlFor="birthday">Birthday:</label>
-        <input
+        <Label htmlFor="birthday">Birthday:</Label>
+        <Input
           placeholder="2002-08-28"
           id="birthday"
           type="text"
@@ -147,8 +150,13 @@ export function SignupPage() {
         />
 
         {/* submitting the form */}
-        <input role="submit-button" id="submit" type="submit" value="Submit" />
-      </form>
-    </>
+        <SubmitButton role="submit-button" id="submit" type="submit" value="Submit" />
+        </FormContainer>
+
+        <p>
+        Have an account ? <Link to="/login"> Login </Link>
+        </p>
+    </FormWrapper>
+
   );
 }

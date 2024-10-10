@@ -6,7 +6,6 @@ const Post = require("../../models/post");
 const User = require("../../models/user");
 const mongoose = require("mongoose");
 
-
 require("../mongodb_helper");
 
 const secret = process.env.JWT_SECRET;
@@ -28,6 +27,7 @@ let token;
 describe("/posts", () => {
   beforeAll(async () => {
     await Post.deleteMany({});
+    await User.deleteMany({})
     const user = new User({
       email: "post-test@test.com",
       password: "aA1!12222",
@@ -35,7 +35,7 @@ describe("/posts", () => {
       firstName: "test",
       lastName: "dummy",
       gender: "dummy",
-      birthday: new Date("1989-11-12")
+      birthday: new Date("1989-11-12"),
     });
     await user.save();
     await Post.deleteMany({});
@@ -47,8 +47,6 @@ describe("/posts", () => {
     await Post.deleteMany({});
   });
 
-
-
   describe("POST, when a valid token is present", () => {
     test("responds with a 201", async () => {
       const response = await request(app)
@@ -58,10 +56,7 @@ describe("/posts", () => {
       expect(response.status).toEqual(201);
     });
 
-
-
     test("creates a new post", async () => {
-
       const user = new User({
         email: "post-test@test.com",
         password: "aA1!12222",
@@ -73,20 +68,20 @@ describe("/posts", () => {
       });
       await user.save();
 
-      const token = createToken(user._id)
+      const token = createToken(user._id);
 
       await request(app)
         .post("/posts")
         .set("Authorization", `Bearer ${token}`)
-        .send({ 
+        .send({
           message: "Hello World!!",
-          dateCreated: new Date('2024-10-03'),
+          dateCreated: new Date("2024-10-03"),
         });
 
       const posts = await Post.find().populate("user");
       expect(posts.length).toEqual(1);
       expect(posts[0].message).toEqual("Hello World!!");
-      expect(posts[0].dateCreated).toEqual(new Date('2024-10-03'));
+      expect(posts[0].dateCreated).toEqual(new Date("2024-10-03"));
       expect(posts[0].user.username).toEqual("alexia");
     });
 
@@ -156,9 +151,9 @@ describe("/posts", () => {
         lastName: "Chris",
         gender: "both",
         birthday: new Date("1990-12-25"),
-      })
-      user1.save()
-      
+      });
+      user1.save();
+
       const user2 = new User({
         email: "user2@email.com",
         password: "aA1!12222",
@@ -167,20 +162,32 @@ describe("/posts", () => {
         lastName: "two",
         gender: "two",
         birthday: new Date("2002-10-01"),
-      })
-      user2.save()
+      });
+      user2.save();
 
-      const post1 = new Post({ message: "howdy!", dateCreated: new Date("2024-10-02"), user: user1._id });
-      const post2 = new Post({ message: "bonjour!", dateCreated: new Date("2020-11-22"), user: user1._id  });
-      const post3 = new Post({ message: "hola!", dateCreated: new Date("2020-12-22"), user: user2._id });
+      const post1 = new Post({
+        message: "howdy!",
+        dateCreated: new Date("2024-10-02"),
+        user: user1._id,
+      });
+      const post2 = new Post({
+        message: "bonjour!",
+        dateCreated: new Date("2020-11-22"),
+        user: user1._id,
+      });
+      const post3 = new Post({
+        message: "hola!",
+        dateCreated: new Date("2020-12-22"),
+        user: user2._id,
+      });
       await post1.save();
       await post2.save();
       await post3.save();
 
       const response = await request(app)
-      .get(`/posts?userId=${user1._id}`)
-      .set("Authorization", `Bearer ${token}`);
-      
+        .get(`/posts?userId=${user1._id}`)
+        .set("Authorization", `Bearer ${token}`);
+
       const post = response.body.posts;
       const firstPost = post[0];
       const secondPost = post[1];
@@ -192,11 +199,10 @@ describe("/posts", () => {
       expect(secondPost.user._id).toEqual(user1._id.toString());
       // expect(thirdPost.user._id).toEqual(user2._id.toString());
 
-      expect(post.length).toEqual(2)
+      expect(post.length).toEqual(2);
 
       expect(new Date(firstPost.dateCreated)).toEqual(new Date("2024-10-02"));
       expect(new Date(secondPost.dateCreated)).toEqual(new Date("2020-11-22"));
-      
     });
 
     test("returns every post in the collection", async () => {
@@ -204,7 +210,6 @@ describe("/posts", () => {
       const post2 = new Post({ message: "hola!" });
       await post1.save();
       await post2.save();
-      
 
       const response = await request(app)
         .get("/posts")
@@ -216,8 +221,6 @@ describe("/posts", () => {
 
       expect(firstPost.message).toEqual("howdy!");
       expect(secondPost.message).toEqual("hola!");
-
-    
     });
 
     test("returns post with user information", async () => {
@@ -229,26 +232,26 @@ describe("/posts", () => {
         lastName: "Chris",
         gender: "both",
         birthday: new Date("1990-12-25"),
-      })
-      user1.save()
+      });
+      user1.save();
 
       const post1 = new Post({
         message: "hello",
         dateCreated: new Date("2024-10-02"),
-        user: user1._id
-      })
-      post1.save()
+        user: user1._id,
+      });
+      post1.save();
 
       const response = await request(app)
-      .get("/posts")
-      .set("Authorization", `Bearer ${token}`);
+        .get("/posts")
+        .set("Authorization", `Bearer ${token}`);
 
-      const post = response.body.posts[0]
-      expect(post.message).toEqual("hello")
-      expect(new Date(post.dateCreated)).toEqual(new Date("2024-10-02"))
-      expect(post.user.username).toEqual("marion")
-      expect(post.user.password).toEqual(undefined)
-    })
+      const post = response.body.posts[0];
+      expect(post.message).toEqual("hello");
+      expect(new Date(post.dateCreated)).toEqual(new Date("2024-10-02"));
+      expect(post.user.username).toEqual("marion");
+      expect(post.user.password).toEqual(undefined);
+    });
 
     test("returns a new token", async () => {
       const post1 = new Post({ message: "First Post!" });
@@ -332,8 +335,8 @@ describe("DELETE /posts/:id", () => {
       lastName: "two",
       gender: "two",
       birthday: new Date("2002-10-01"),
-    })
-    user2.save()
+    });
+    user2.save();
 
     post1 = new Post({
       message: "hello",
@@ -375,7 +378,6 @@ describe("DELETE /posts/:id", () => {
   });
 
   test("responds with 403 if user is not authorized", async () => {
-
     const response = await request(app)
       .delete(`/posts/${post2._id}`)
       .set("Authorization", `Bearer ${token}`);
@@ -384,4 +386,88 @@ describe("DELETE /posts/:id", () => {
     expect(response.body.message).toEqual("Unauthorized to delete this post");
   });
 });
+describe("Tests for like controller functions", () => {
+  let token;
+  let user1;
+  let post1;
 
+  beforeEach(async () => {
+    await User.deleteMany({})
+    await Post.deleteMany({})
+    user1 = new User({
+      email: "chris@email.com",
+      password: "aA1!12222",
+      username: "marion",
+      firstName: "Alexia",
+      lastName: "Chris",
+      gender: "both",
+      birthday: new Date("1990-12-25"),
+    });
+    await user1.save();
+
+    token = createToken(user1.id);
+
+    const user2 = new User({
+      email: "user2@email.com",
+      password: "aA1!12222",
+      username: "user2",
+      firstName: "user",
+      lastName: "two",
+      gender: "two",
+      birthday: new Date("2002-10-01"),
+    });
+    user2.save();
+
+    post1 = new Post({
+      message: "hello",
+      dateCreated: new Date("2024-10-02"),
+      user: user2._id,
+    });
+    await post1.save();
+  });
+
+  afterEach(async () => {
+    await User.deleteMany({});
+    await Post.deleteMany({});
+  });
+
+  test("Post, add like returns 200 status", async () => {
+    const response = await request(app)
+      .post(`/posts/addlike/${post1.id}`)
+      .set("Authorization", `Bearer ${token}`);
+    expect(response.status).toEqual(200);
+  });
+
+  test("Post, add like, likes list length becomes 1", async () => {
+    const response = await request(app)
+      .post(`/posts/addlike/${post1.id}`)
+      .set("Authorization", `Bearer ${token}`);
+
+    const postObject = await Post.findById(post1._id)
+
+    expect(postObject.likes.length).toEqual(1)
+    expect(postObject.likes[0]._id).toEqual(user1._id)
+  });
+
+  test("like removed", async () => {
+    const response = await request(app)
+      .post(`/posts/deletelike/${post1.id}`)
+      .set("Authorization", `Bearer ${token}`);
+    expect(response.status).toEqual(200);
+  });
+  test("Post, like removed, user is no longer in likes list", async () => {
+
+    post1.likes.push(user1)
+    post1.save()
+    expect(post1.likes.length).toBe(1)
+    expect(post1.likes[0]._id).toEqual(user1._id)
+    const response = await request(app)
+      .post(`/posts/deletelike/${post1.id}`)
+      .set("Authorization", `Bearer ${token}`);
+    expect(response.status).toEqual(200);
+
+    const postObject = await Post.findById(post1._id)
+
+    expect(postObject.likes.length).toEqual(0)
+  });
+});

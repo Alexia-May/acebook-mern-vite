@@ -509,4 +509,168 @@ describe("/friends", () => {
       expect(response.body.message).toEqual("Unable to delete friend")
     })
   })
+  describe("decline freind request", () => {
+    test("Given a valid token and request a 200 response is returned", async () => {
+      const user2 = new User({
+        email: "chris@email.com",
+        password: "aA1!12222",
+        username: "marion",
+        firstName: "Alexia",
+        lastName: "Chris",
+        gender: "both",
+        birthday: new Date("0000-12-25"),
+      });
+      await user2.save();
+      user.friendRequests.push(user2);
+      await user.save();
+
+      const response = await request(app)
+      .delete(`/friends/accept?userId=${user2._id}`)
+      .set("Authorization", `Bearer ${token}`);
+
+      expect(response.status).toEqual(200)
+    })
+    test("Given a valid token and request a message saying friend has been deleted is returned", async () => {
+      const user2 = new User({
+        email: "chris@email.com",
+        password: "aA1!12222",
+        username: "marion",
+        firstName: "Alexia",
+        lastName: "Chris",
+        gender: "both",
+        birthday: new Date("0000-12-25"),
+      });
+      await user2.save();
+      user.friendRequests.push(user2);
+      await user.save();
+
+      const response = await request(app)
+      .delete(`/friends/accept?userId=${user2._id}`)
+      .set("Authorization", `Bearer ${token}`);
+
+      expect(response.body.message).toEqual("Friend request declined")
+    })
+    test("Given a valid token and request a new token is returned with the correct userId", async () => {
+      const user2 = new User({
+        email: "chris@email.com",
+        password: "aA1!12222",
+        username: "marion",
+        firstName: "Alexia",
+        lastName: "Chris",
+        gender: "both",
+        birthday: new Date("0000-12-25"),
+      });
+      await user2.save();
+      user.friendRequests.push(user2);
+      await user.save();
+
+      const response = await request(app)
+      .delete(`/friends/accept?userId=${user2._id}`)
+      .set("Authorization", `Bearer ${token}`);
+
+      const newToken = response.body.token;
+      const newTokenDecoded = JWT.decode(newToken, process.env.JWT_SECRET);
+      const oldTokenDecoded = JWT.decode(token, process.env.JWT_SECRET);
+
+      // iat stands for issued at
+      expect(newTokenDecoded.iat > oldTokenDecoded.iat).toEqual(true);
+      expect(newTokenDecoded.user_id).toEqual(user._id.toString())
+    })
+    test("Given a valid token and request a friend is deleted", async () => {
+      const user2 = new User({
+        email: "chris@email.com",
+        password: "aA1!12222",
+        username: "marion",
+        firstName: "Alexia",
+        lastName: "Chris",
+        gender: "both",
+        birthday: new Date("0000-12-25"),
+      });
+      await user2.save();
+      user.friendRequests.push(user2);
+      await user.save();
+
+      const response = await request(app)
+      .delete(`/friends/accept?userId=${user2._id}`)
+      .set("Authorization", `Bearer ${token}`);
+
+      const userObject = await User.findById(user._id)
+
+      expect(userObject.friends.length).toEqual(0)
+    })
+    test("A user has multiple friends only the given on is deleted", async () => {
+      const user2 = new User({
+        email: "chris@email.com",
+        password: "aA1!12222",
+        username: "marion",
+        firstName: "Alexia",
+        lastName: "Chris",
+        gender: "both",
+        birthday: new Date("0000-12-25"),
+      });
+      await user2.save();
+      const user3 = new User({
+        email: "bob@email.com",
+        password: "aA1!12222",
+        username: "marion",
+        firstName: "Alexia",
+        lastName: "Chris",
+        gender: "both",
+        birthday: new Date("0000-12-25"),
+      });
+      await user3.save();
+      user.friendRequests.push(user2);
+      user.friendRequests.push(user3);
+      await user.save();
+
+      const response = await request(app)
+      .delete(`/friends/accept?userId=${user2._id}`)
+      .set("Authorization", `Bearer ${token}`);
+
+      const userObject = await User.findById(user._id)
+
+      expect(userObject.friendRequests.length).toEqual(1)
+      expect(userObject.friendRequests[0]._id).toEqual(user3._id)
+    })
+    test("Given an invalid friend id an error status of 500 is returned", async () => {
+      const user2 = new User({
+        email: "chris@email.com",
+        password: "aA1!12222",
+        username: "marion",
+        firstName: "Alexia",
+        lastName: "Chris",
+        gender: "both",
+        birthday: new Date("0000-12-25"),
+      });
+      await user2.save();
+      user.friendRequests.push(user2);
+      await user.save();
+
+      const response = await request(app)
+      .delete(`/friends/accept?userId=1234`)
+      .set("Authorization", `Bearer ${token}`);
+
+      expect(response.status).toEqual(500)
+    })
+    test("Given an invalid friend id an error status of 500 is returned", async () => {
+      const user2 = new User({
+        email: "chris@email.com",
+        password: "aA1!12222",
+        username: "marion",
+        firstName: "Alexia",
+        lastName: "Chris",
+        gender: "both",
+        birthday: new Date("0000-12-25"),
+      });
+      await user2.save();
+      user.friendRequests.push(user2);
+      await user.save();
+
+      const response = await request(app)
+      .delete(`/friends/accept?userId=1234`)
+      .set("Authorization", `Bearer ${token}`);
+
+      expect(response.body.message).toEqual("Can not decline request")
+    })
+  })
 });

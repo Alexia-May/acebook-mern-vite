@@ -1,4 +1,38 @@
+
 .home {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f4f4f9;
+  font-family: 'Arial', sans-serif;
+}
+
+.home h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.home a {
+  text-decoration: none;
+  color: white;
+  background-color: #3498db;
+  padding: 12px 24px;
+  border-radius: 5px;
+  font-size: 1rem;
+  margin: 10px 0;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+  width: 150px;
+  text-align: center;
+}
+
+.home a:hover {
+  background-color: #2980b9;
+}
+
+.home a:first-of-type {
+  margin-top: 0;
 }

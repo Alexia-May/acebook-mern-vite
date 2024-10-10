@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { GlobalStyle, Wrapper, Form, Heading, Label, Input, Button } from "./Loginpage.styled"; 
 import { login } from "../../services/authentication";
 
 export function LoginPage() {
@@ -30,24 +30,29 @@ export function LoginPage() {
 
   return (
     <>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email:</label>
-        <input
-          id="email"
-          type="text"
-          value={email}
-          onChange={handleEmailChange}
-        />
-        <label htmlFor="password">Password:</label>
-        <input
-          id="password"
-          type="password"
-          value={password}
-          onChange={handlePasswordChange}
-        />
-        <input role="submit-button" id="submit" type="submit" value="Submit" />
-      </form>
+      <GlobalStyle />
+      <Wrapper>
+        <Form onSubmit={handleSubmit}>
+          <Heading>Login</Heading>
+          <Label htmlFor="email">Email:</Label>
+          <Input
+            id="email"
+            type="text"
+            value={email}
+            onChange={handleEmailChange}
+          />
+          <Label htmlFor="password">Password:</Label>
+          <Input
+            id="password"
+            type="password"
+            value={password}
+            onChange={handlePasswordChange}
+          />
+          <Button role="submit-button" id="submit" type="submit">
+            Submit
+          </Button>
+        </Form>
+      </Wrapper>
     </>
   );
 }

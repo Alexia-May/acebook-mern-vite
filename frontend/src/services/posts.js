@@ -63,3 +63,31 @@ export async function deletePost(token, postId) {
     return data.token;
   }
 }
+
+export async function addLike(token, postId) {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const newUrl = new URL(`${BACKEND_URL}/posts/addLike/${postId}`);
+  const response = await fetch(newUrl.toString(), requestOptions);
+  
+  const data = await response.json()
+  return data;
+}
+
+export async function deleteLike(token, postId) {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const newUrl = new URL(`${BACKEND_URL}/posts/deleteLike/${postId}`);
+  const response = await fetch(newUrl.toString(), requestOptions);
+  
+  const data = await response.json()
+  return data;
+}

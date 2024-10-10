@@ -120,7 +120,8 @@ describe("UserPage", () => {
         </MemoryRouter>
       );
     });
-    expect(screen.queryByText("Add Friend")).not.to.exist;
+    const buttonEls = await screen.findAllByRole("button")
+    expect(buttonEls[1].textContent).toEqual("Remove Friend")
   })
   test("if the user isnt a friend the add friend component is loaded", async () => {
     window.localStorage.setItem("token", "testToken");
