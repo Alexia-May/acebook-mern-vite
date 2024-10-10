@@ -13,7 +13,7 @@ describe("Home Page", () => {
     );
 
     const heading = screen.getByRole("heading");
-    expect(heading.textContent).toEqual("Welcome to Acebook!");
+    expect(heading.textContent).toEqual("Welcome to the Watermelon Club!");
   });
 
   test("Displays a signup link", async () => {

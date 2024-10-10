@@ -20,7 +20,7 @@ describe("Create Post Component" , () => {
     async function typeInArea(text) {
         const user = userEvent.setup();
 
-        const textarea = screen.getByTitle("MessageBox");
+        const textarea = screen.getByTestId("messageForm");
         await user.type(textarea, text);
     }
 
@@ -29,7 +29,7 @@ describe("Create Post Component" , () => {
             <CreatePost/>
         );
 
-        const title = screen.getByText("Create a Post");
+        const title = screen.findByText("Share what is on your mind...");
         
         expect(title).to.exist;
     });
@@ -40,8 +40,8 @@ describe("Create Post Component" , () => {
         );
 
         await typeInArea("Hello world");
-        const textarea = screen.getByTitle("MessageBox");
-        expect(textarea.value).to.equal("Hello world");
+        const textarea = screen.getByTestId("messageForm");
+        expect(textarea.value).toEqual("Hello world");
         
     });
 
