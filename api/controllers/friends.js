@@ -1,8 +1,9 @@
 const User = require("../models/user");
 const { generateToken } = require("../lib/token");
-
+const Conversation = require('../models/conversation')
 async function addFriend(req, res) {
   try {
+    console.log("hello")
     const user = await User.findById(req.user_id);
     const friend = await User.findById(req.query.userId);
     if (
@@ -150,11 +151,8 @@ async function getPendingFriendRequests(req, res) {
 }
 async function cancelFriendRequest(req, res) {
   try {
-    console.log("hello")
     const user = await User.findById(req.user_id);
     const friend = await User.findById(req.query.userId);
-    console.log("user", user)
-    console.log("friend", friend)
     if (friend.friendRequests.includes(user._id)) {
 
       friend.friendRequests.pull(user._id);
@@ -177,6 +175,34 @@ async function cancelFriendRequest(req, res) {
     });
   }
 }
+
+async function deleteFriend(req, res) {
+  try {
+
+    const token = generateToken(req.user_id)
+    const user = await User.findById(req.user_id)
+    const friend = await User.findById(req.query.userId);
+    user.friends.pull(friend)
+    await user.save()
+    res.status(200).json({ message: "A friend has been deleted", token: token})
+  } catch (err) {
+    res.status(500).json({ message: "Unable to delete friend", error: err.message})
+  }
+}
+
+// async function getFriendsByNoConversation(req, res) {
+//   try {
+//     const conversations = await Conversation.find()
+//     const token = generateToken(req.user_id);
+//     const user = await User.findById(req.user_id);
+//     const friends = await User.find({ friendRequests: user._id });
+//     res.status(200).json({ pendingRequests: pendingRequests, token: token });
+//   } catch (error) {
+//     res
+//       .status(500)
+//       .json({ message: "Error fetching posts", error: error.message });
+//   }
+// }
 const FriendsController = {
   addFriend,
   getFriends,
@@ -185,7 +211,8 @@ const FriendsController = {
   getFriendRequests,
   declineFriendRequest,
   getPendingFriendRequests,
-  cancelFriendRequest
+  cancelFriendRequest,
+  deleteFriend
 };
 
 module.exports = FriendsController;

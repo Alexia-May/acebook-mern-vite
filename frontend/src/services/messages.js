@@ -23,3 +23,23 @@ export async function getMessages(token, conversationId) {
   console.log("messages", data);
   return data;
 }
+
+export async function sendMessage(token, conversationId, messageObject) {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(messageObject),
+  };
+  
+  const response = await fetch(`${BACKEND_URL}/messages?conversationId=${conversationId}`, requestOptions); // /posts refers to all the routes related to posts
+
+  if (response.status !== 201) {
+    throw new Error("Unable to create a post");
+  } else {
+    const data = await response.json();
+    return data;
+  }
+}
