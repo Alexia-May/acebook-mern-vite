@@ -57,7 +57,7 @@ export function FriendsPage() {
       <NavBar></NavBar>
 
       <h1>Check out your Friends!</h1>
-      {friendRequests.length === undefined && <p>Your freind requests</p>}
+      {friendRequests.length === undefined && <p>Your friend requests</p>}
       {friendRequests.map((friend) => (
         <>
           <Friend
