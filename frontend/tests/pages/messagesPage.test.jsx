@@ -15,9 +15,18 @@ describe("Messages Page", () => {
     window.localStorage.removeItem("token");
   });
 
-  test.("It displays a page heading", async () => {
+  test("It displays a page heading", async () => {
+    window.localStorage.setItem("token", "testToken");
     getConversations.mockResolvedValue({
-      conversations: [],
+      conversations: [{
+        _id: "1234",
+        participants: [
+          { username: "testuser1"},
+          { username: "testuser2"}
+        ],
+        lastMessage: { message: "hello" },
+        updatedAt: "now"
+      }],
       token: "newToken",
     });
     // Render the component
