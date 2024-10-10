@@ -5,6 +5,7 @@ const app = require("../../app");
 const User = require("../../models/user");
 const mongoose = require("mongoose");
 const { describe } = require("node:test");
+const { generateToken } = require("../../lib/token");
 
 require("../mongodb_helper");
 
@@ -169,6 +170,27 @@ describe("/friends", () => {
       expect(friends.length).toEqual(1);
       expect(friends[0]._id).toEqual(user2._id.toString());
     });
+    test("GET, with invalid token", async () => {
+      let token = generateToken("123")
+      const user2 = new User({
+        email: "chris@email.com",
+        password: "aA1!12222",
+        username: "marion",
+        firstName: "Alexia",
+        lastName: "Chris",
+        gender: "both",
+        birthday: new Date("0000-12-25"),
+      });
+      await user2.save();
+
+      const response = await request(app)
+        .get("/friends")
+        .set("Authorization", `Bearer ${token}`);
+
+
+      expect(response.status).toEqual(500);
+
+    });
   });
 
   describe("getNonFriendUsers", () => {
@@ -227,6 +249,25 @@ describe("/friends", () => {
       expect(users[1].email).toEqual("email4@email.com")
 
     });
+    test("GET, with invalid token", async () => {
+      let token = generateToken("123")
+      const user2 = new User({
+        email: "chris@email.com",
+        password: "aA1!12222",
+        username: "marion",
+        firstName: "Alexia",
+        lastName: "Chris",
+        gender: "both",
+        birthday: new Date("0000-12-25"),
+      });
+      await user2.save();
+
+      const response = await request(app)
+        .get("/friends/non")
+        .set("Authorization", `Bearer ${token}`);
+
+
+      expect(response.status).toEqual(500);
   });
   describe("accept friend request", () => {
     test("POST, when a valid token is present and valid query parameter", async () => {
@@ -344,6 +385,76 @@ describe("/friends", () => {
       expect(friendRequests.length).toEqual(1);
       expect(friendRequests[0]._id).toEqual(user2._id.toString());
     });
+    test("GET, with invalid token", async () => {
+      let token = generateToken("123")
+      const user2 = new User({
+        email: "chris@email.com",
+        password: "aA1!12222",
+        username: "marion",
+        firstName: "Alexia",
+        lastName: "Chris",
+        gender: "both",
+        birthday: new Date("0000-12-25"),
+      });
+      await user2.save();
+
+      const response = await request(app)
+        .get("/friends/requests")
+        .set("Authorization", `Bearer ${token}`);
+
+
+      expect(response.status).toEqual(500);
+    })
+  })
+  describe("get pending friend request", () => {
+    test("GET, when a token is valid, return 200 status", async () => {
+      const response = await request(app)
+        .get("/friends/requests/pending")
+        .set("Authorization", `Bearer ${token}`);
+
+      expect(response.status).toEqual(200);
+    });
+    test("Get, returns all friend pending requests", async () => {
+      const user2 = new User({
+        email: "chris@email.com",
+        password: "aA1!12222",
+        username: "marion",
+        firstName: "Alexia",
+        lastName: "Chris",
+        gender: "both",
+        birthday: new Date("0000-12-25"),
+      });
+      await user2.save();
+      user2.friendRequests.push(user);
+      await user2.save();
+
+      const response = await request(app)
+        .get("/friends/requests/pending")
+        .set("Authorization", `Bearer ${token}`);
+
+      const pendingRequests = response.body.pendingRequests;
+      expect(pendingRequests.length).toEqual(1);
+      expect(pendingRequests[0]._id).toEqual(user2._id.toString());
+    });
+    test("GET, with invalid token", async () => {
+      let token = generateToken("123")
+      const user2 = new User({
+        email: "chris@email.com",
+        password: "aA1!12222",
+        username: "marion",
+        firstName: "Alexia",
+        lastName: "Chris",
+        gender: "both",
+        birthday: new Date("0000-12-25"),
+      });
+      await user2.save();
+
+      const response = await request(app)
+        .get("/friends/requests/pending")
+        .set("Authorization", `Bearer ${token}`);
+
+      expect(response.status).toEqual(500);
+    })
   })
   describe("Delete a freind", () => {
     test("Given a valid token and request a 200 response is returned", async () => {
@@ -674,3 +785,4 @@ describe("/friends", () => {
     })
   })
 });
+})
