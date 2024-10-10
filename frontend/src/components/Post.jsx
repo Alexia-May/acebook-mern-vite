@@ -43,7 +43,8 @@ function Post(props) {
   };
 
   useEffect(() => {
-    setAvatar(getRandomAvatar());
+    const randomAvatar = getRandomAvatar();
+    setAvatar(randomAvatar);
   }, []);
 
   useEffect(() => {
