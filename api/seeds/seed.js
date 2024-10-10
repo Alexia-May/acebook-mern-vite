@@ -114,7 +114,7 @@ async function seedData() {
     });
     const post8 = new Post({
       message: "Anyone up for a coffee chat?",
-      dateCreated: new Date("2024-10-11"),
+      dateCreated: new Date("2024-10-09"),
       user: user5._id,
     });
     // Save all posts

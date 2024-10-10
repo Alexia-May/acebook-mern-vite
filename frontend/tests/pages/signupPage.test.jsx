@@ -4,12 +4,18 @@ import { vi } from "vitest";
 import { useNavigate } from "react-router-dom";
 import { signup } from "../../src/services/authentication";
 import { SignupPage } from "../../src/pages/Signup/SignupPage";
+import { MemoryRouter } from 'react-router-dom'; 
 
 // Mocking React Router's useNavigate function
-vi.mock("react-router-dom", () => {
+vi.mock('react-router-dom', async (importOriginal) => {
+  const actual = await importOriginal();
   const navigateMock = vi.fn();
-  const useNavigateMock = () => navigateMock; // Create a mock function for useNavigate
-  return { useNavigate: useNavigateMock };
+  const useNavigateMock = () => navigateMock;
+  return {
+    ...actual,
+    Link: actual.Link,  // Keep the original Link component
+    useNavigate: useNavigateMock, // Mock useNavigate if needed
+  };
 });
 
 // Mocking the signup service
@@ -45,44 +51,66 @@ async function completeSignupForm() {
   await user.click(submitButtonEl);
 }
 
+
+
 describe("Signup Page", () => {
   beforeEach(() => {
     vi.resetAllMocks();
   });
 
-  test("allows a user to signup", async () => {
-    render(<SignupPage />);
+  test('renders SignupPage without crashing', () => {
+    render(
+      <MemoryRouter>
+        <SignupPage />
+      </MemoryRouter>
+    );
+  });
 
+  test("allows a user to signup", async () => {
+    render(
+      <MemoryRouter>
+        <SignupPage />
+      </MemoryRouter>
+    );
     await completeSignupForm();
 
     expect(signup).toHaveBeenCalledWith("test@email.com", "1234", "TestUsername", "TestFirstName", "TestLastName", "TestPronouns", "2001-01-01");
   });
 
   test("navigates to /login on successful signup", async () => {
-    render(<SignupPage />);
-
-    const navigateMock = useNavigate();
+    render(
+      <MemoryRouter>
+        <SignupPage />
+      </MemoryRouter>
+    );
 
     await completeSignupForm();
-
+    const navigateMock = useNavigate();
     expect(navigateMock).toHaveBeenCalledWith("/login");
   });
 
   test("navigates to /signup on unsuccessful signup", async () => {
-    render(<SignupPage />);
-
+    render(
+      <MemoryRouter>
+        <SignupPage />
+      </MemoryRouter>
+    );
     signup.mockRejectedValue(new Error("Error signing up"));
-    const navigateMock = useNavigate();
+
 
     await completeSignupForm();
-
+    const navigateMock = useNavigate();
       expect(navigateMock).toHaveBeenCalledWith("/signup");
     });
-
+  
+  
 
   test("shows error for invalid email format", async () => {
-    render(<SignupPage />);
-    const user = userEvent.setup();
+    render(
+      <MemoryRouter>
+        <SignupPage />
+      </MemoryRouter>
+    );    const user = userEvent.setup();
     
     // Filling in other valid fields
     const emailInputEl = screen.getByLabelText("Email:");
@@ -112,7 +140,11 @@ describe("Signup Page", () => {
 
 
   test("shows error for invalid password format", async () => {
-    render(<SignupPage />);
+    render(
+      <MemoryRouter>
+        <SignupPage />
+      </MemoryRouter>
+    );    
     const user = userEvent.setup();
     
     // Filling in other valid fields
