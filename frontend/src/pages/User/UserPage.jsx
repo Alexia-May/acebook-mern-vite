@@ -22,6 +22,9 @@ export function UserPage() {
   const [isFriend, setIsFriend] = useState(false);
   const navigate = useNavigate();
   const { userId } = useParams();
+  const [likeState, setLikeState] = useState(false);
+  const [deleted, setDelete] = useState(false);
+  const [loggedInUser, SetLoggedInUser] = useState([])
 
   // function to get users posts
   useEffect(() => {
@@ -38,7 +41,7 @@ export function UserPage() {
           navigate("/login");
         });
     }
-  }, [navigate, userId]);
+  }, [navigate, deleted, userId, likeState]);
 
   // function to get user information
   useEffect(() => {
@@ -63,6 +66,24 @@ export function UserPage() {
         });
     }
   }, [navigate, userId]);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const loggedIn = token !== null;
+    if (loggedIn) {
+      getUserInfo(token)
+        .then((data) => {
+          SetLoggedInUser({
+            _id: data.userInfo[0]._id,
+          });
+          // console.log(data.userInfo[0])
+          localStorage.setItem("token", data.token);
+        })
+        .catch((err) => {
+          console.error(err);
+          // navigate("/login");
+        });
+    }
+  }, [navigate]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -86,7 +107,7 @@ export function UserPage() {
       setIsFriend(hasId);
     }
   }, [user, friends]);
-  console.log(isFriend)
+  console.log(isFriend);
 
   const token = localStorage.getItem("token");
   if (!token) {
@@ -103,10 +124,26 @@ export function UserPage() {
         birthday={user.birthday}
       />
       <br />
-      {isFriend && <Button handleClick={() => handleDeleteFriendClick(navigate, userId)} buttonText={"Remove Friend"}/>}
-      {!isFriend && <Button handleClick={() => handleAddFriendClick(navigate, userId)} buttonText={"Add Friend"}/>}
+      {isFriend && (
+        <Button
+          handleClick={() => handleDeleteFriendClick(navigate, userId)}
+          buttonText={"Remove Friend"}
+        />
+      )}
+      {!isFriend && (
+        <Button
+          handleClick={() => handleAddFriendClick(navigate, userId)}
+          buttonText={"Add Friend"}
+        />
+      )}
       <h2>Posts</h2>
-      <ListOfPosts posts={posts} />
+      <ListOfPosts
+        posts={posts}
+        userId={loggedInUser._id}
+        setDelete={setDelete}
+        likeState={likeState}
+        setLikeState={setLikeState}
+      />
     </>
   );
 }
