@@ -30,6 +30,8 @@ export const HomeLogo = styled.div`
     }
 `;
 
+
+
 export const LogoContainer = styled.div`
     font-size: 2rem; /* For the logo icon (🍉) */
     margin-right: 0.5rem;
