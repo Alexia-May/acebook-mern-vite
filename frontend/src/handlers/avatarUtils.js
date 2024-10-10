@@ -10,7 +10,7 @@ const avatars = [avatar1, avatar2, avatar3, avatar4, avatar5, avatar6];
 
 // Function to get a random avatar
 export const getRandomAvatar = () => {
-    const avatarCount = 6; // The number of available avatar images
-    const randomIndex = Math.floor(Math.random() * avatarCount) + 1;
+    //const avatarCount = 6; // The number of available avatar images
+    const randomIndex = Math.floor(Math.random() * avatars.length);
     return avatars[randomIndex];
 };
