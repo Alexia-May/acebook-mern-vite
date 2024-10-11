@@ -75,7 +75,7 @@ export function FriendsPage() {
       ))}
       <p>All Users</p>
       {users.map((user) => (
-        <User key={user._id} user={user} />
+        <User key={user._id} _id={user._id} username={user.username} />
       ))}
       <p>Your pending friend requests</p>
       {pendingFriendRequests.map((friend) => (
