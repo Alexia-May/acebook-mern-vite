@@ -8,7 +8,7 @@ describe("user", () => {
       username: "testname1",
     };
 
-    render(<User user={user} />);
+    render(<User _id={user._id} username={user.username} />);
 
     const usernameEl = screen.getByTestId("user-link");
     expect(usernameEl.textContent).toEqual("testname1");
@@ -20,7 +20,7 @@ describe("user", () => {
       username: "testname1",
     };
 
-    render(<User user={user} />);
+    render(<User _id={user._id} username={user.username} />);
 
     const link = screen.getByTestId("user-link").href
 
@@ -33,7 +33,7 @@ describe("user", () => {
       username: "testname2",
     };
 
-    render(<User user={user} />);
+    render(<User _id={user._id} username={user.username} />);
 
     const link = screen.getByTestId("user-link").href
 
