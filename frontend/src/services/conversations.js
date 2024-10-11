@@ -22,3 +22,22 @@ export async function getConversations(token) {
   return data;
 }
 
+export async function createConversation(token, conversationObject) {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(conversationObject),
+  };
+  
+  const response = await fetch(`${BACKEND_URL}/conversations`, requestOptions); // /posts refers to all the routes related to posts
+
+  if (response.status !== 201) {
+    throw new Error("Unable to create a post");
+  } else {
+    const data = await response.json();
+    return data;
+  }
+}

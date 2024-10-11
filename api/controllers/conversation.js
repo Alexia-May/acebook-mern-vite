@@ -14,18 +14,22 @@ async function getUserConversations(req, res) {
 //   res.status(200).json({ conversations: conversations, token: token });
 // }
 
-// async function createConversation(req, res) {
-//   const conversationObject = req.body
-//   conversationObject.participants.push(req.user_id) 
-//   const conversation = new Conversation(postObject);
-//   conversation.save();
+async function createConversation(req, res) {
+  const conversationObject = req.body
+  const conversation = new Conversation(conversationObject);
+  conversation.participants.push(req.user_id) 
+  console.log("conversation", conversation)
+  // console.log(conversationObject)
+  conversation.save();
 
-//   const newToken = generateToken(req.user_id);
-//   res.status(201).json({ message: "Conversation created", token: newToken });
-// }
+
+  const newToken = generateToken(req.user_id);
+  res.status(201).json({ message: "Conversation created", token: newToken });
+}
 
 const ConversationsController = {
-getUserConversations: getUserConversations
+getUserConversations: getUserConversations,
+createConversation: createConversation
 };
 
 module.exports = ConversationsController;

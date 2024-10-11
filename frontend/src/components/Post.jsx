@@ -75,10 +75,8 @@ function Post(props) {
               <Image src={avatar} alt="User Avatar" />
               <UserDetails>
                 <User
-                  user={{
-                    _id: props.postCreatorId,
-                    username: props.username,
-                  }}
+                    _id={props.postCreatorId}
+                    username={ props.username}
                 />
                 <TimeStamp data-testid="dateCreated">
                   {getDateString(props.dateCreated)}
