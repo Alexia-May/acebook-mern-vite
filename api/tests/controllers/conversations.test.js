@@ -28,7 +28,7 @@ require("../mongodb_helper");
 let token;
 let user1;
 let user2;
-describe("/users", () => {
+describe("/conversations", () => {
   beforeEach(async () => {
     await User.deleteMany({});
     await Conversation.deleteMany({});
@@ -85,12 +85,46 @@ describe("/users", () => {
       .set("Authorization", `Bearer ${token}`);
 
     const conversations = response.body.conversations;
-    console.log(conversations);
 
     expect(conversations.length).toEqual(1);
     expect(conversations[0].lastMessage.message).toEqual("Hello there.");
     expect(conversations[0].participants[0]._id).toEqual(user1._id.toString());
     expect(conversations[0].participants[1]._id).toEqual(user2._id.toString());
+  });
+  test("POST, create a conversation with a valid token returns 200 status", async () => {
+    const conversationObject = {
+      participants: [user2],
+      updatedAt: new Date("2024-10-07"),
+    };
+    const response = await request(app)
+      .post("/conversations")
+      .set("Authorization", `Bearer ${token}`)
+      .send(conversationObject);
+
+    expect(response.status).toEqual(201)
+  });
+  
+  test("POST, create a conversation with a valid token new conversation is created", async () => {
+    const conversationObject = {
+      participants: [user2],
+      updatedAt: new Date("2024-10-07"),
+    };
+    const response = await request(app)
+      .post("/conversations")
+      .set("Authorization", `Bearer ${token}`)
+      .send(conversationObject);
+
+    const conversations = await Conversation.find().populate("lastMessage")
+    console.log("conversations", conversations)
+
+    expect(conversations.length).toEqual(2)
+
+    expect(conversations[0].lastMessage.message).toEqual("Hello there.");
+    expect(conversations[0].participants[0]._id).toEqual(user1._id);
+    expect(conversations[0].participants[1]._id).toEqual(user2._id)
+
+    expect(conversations[1].participants).toContainEqual(user1._id);
+    expect(conversations[1].participants).toContainEqual(user2._id);
   });
 
 });
