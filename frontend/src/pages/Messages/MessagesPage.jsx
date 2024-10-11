@@ -14,48 +14,72 @@ export function MessagesPage() {
   const navigate = useNavigate();
   const [update, setUpdate] = useState(false);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const loggedIn = token !== null;
-    if (loggedIn) {
-      getConversations(token)
-        .then((data) => {
-          setConversations(data.conversations);
-          localStorage.setItem("token", data.token);
-          setIsLoading(true);
-        })
-        .catch((err) => {
-          console.error(err);
-          navigate("/login");
-        });
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   const loggedIn = token !== null;
+  //   if (loggedIn) {
+  //     getConversations(token)
+  //       .then((data) => {
+  //         setConversations(data.conversations);
+  //         localStorage.setItem("token", data.token);
+  //         setIsLoading(true);
+  //       })
+  //       .catch((err) => {
+  //         console.error(err);
+  //         navigate("/login");
+  //       });
+  //   }
+  // }, [navigate]);
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   const loggedIn = token !== null;
+  //   if (loggedIn) {
+  //     getFriends(token)
+  //       .then((data) => {
+  //         setFriends(data.friends);
+  //         localStorage.setItem("token", data.token);
+  //         setIsLoading(true);
+  //       })
+  //       .catch((err) => {
+  //         console.error(err);
+  //         navigate("/login");
+  //       });
+  //   }
+  // }, [navigate]);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const loggedIn = token !== null;
-    if (loggedIn) {
-      getFriends(token)
-        .then((data) => {
-          setFriends(data.friends);
-          localStorage.setItem("token", data.token);
+    const fetchData = async () => {
+      const token = localStorage.getItem("token");
+      const loggedIn = token !== null;
+      if (loggedIn) {
+        try {
+          const conversationsData = await getConversations(token);
+          setConversations(conversationsData.conversations)
+          const participants = conversationsData.conversations.flatMap((conversation) => conversation.participants)
+          const participantsIds = participants.map((participant) => participant._id)
+          const friendsData = await getFriends(token)
+          const friendsList = friendsData.friends.filter((friend) => !participantsIds.includes(friend._id))
+          setFriends(friendsList)
           setIsLoading(true);
-        })
-        .catch((err) => {
-          console.error(err);
+        } catch (err) {
+          console.log(err);
           navigate("/login");
-        });
-    }
-  }, [navigate]);
-
+        }
+      }
+    };
+    fetchData();
+  }, [navigate, update]);
   const token = localStorage.getItem("token");
   if (!token) {
     navigate("/login");
     return;
   }
-  console.log("friends", friends);
+  // const participants = conversations.flatMap((conversation) => conversation.participants)
+  // const participantsIds = participants.map((participant) => participant._id)
 
-  console.log("conversations", conversations);
+  // console.log("conversations freinds", participantsIds)
+  console.log("friends", friends);
   return (
     <div className="home">
       <NavBar></NavBar>
@@ -83,7 +107,7 @@ export function MessagesPage() {
               handleClick={() =>
                 handleCreateConversationClick(update, setUpdate, {
                   participants: [friend._id],
-                  updatedAt: new Date()
+                  updatedAt: new Date(),
                 })
               }
               buttonText={"Message"}
