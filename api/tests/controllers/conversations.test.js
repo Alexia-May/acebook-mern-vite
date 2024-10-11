@@ -93,7 +93,7 @@ describe("/conversations", () => {
   });
   test("POST, create a conversation with a valid token returns 200 status", async () => {
     const conversationObject = {
-      participants: [user2],
+      participants: [user2._id.toString()],
       updatedAt: new Date("2024-10-07"),
     };
     const response = await request(app)
